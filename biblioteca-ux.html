@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biblioteca UX/UI | RAÍZ</title>
+    <meta
+      name="description"
+      content="Biblioteca visual de identidad, componentes y patrones de interfaz utilizados en el sitio de RAÍZ."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Syne:wght@800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .ux-library-page {
+        background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+      }
+
+      .ux-library-page main {
+        overflow: hidden;
+      }
+
+      .ux-library-hero {
+        display: grid;
+        min-height: 62vh;
+        align-content: end;
+        padding-top: clamp(110px, 13vw, 180px);
+        padding-bottom: clamp(72px, 9vw, 120px);
+        background:
+          linear-gradient(135deg, rgba(226, 220, 211, 0.96), rgba(226, 220, 211, 0.72)),
+          url("assets/images/imgscroll2.jpg") center / cover;
+      }
+
+      .ux-library-hero .eyebrow {
+        font-size: 14px;
+      }
+
+      .ux-library-hero h1 {
+        max-width: 1100px;
+        margin-bottom: 22px;
+        font-size: clamp(52px, 8vw, 112px);
+        letter-spacing: -0.04em;
+      }
+
+      .ux-library-hero > p:last-child {
+        max-width: 650px;
+        margin: 0;
+        color: var(--ink);
+        font-size: clamp(17px, 1.6vw, 22px);
+        line-height: 1.35;
+      }
+
+      .ux-section {
+        border-top: 1px solid var(--line);
+      }
+
+      .ux-section-dark {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .ux-section-heading {
+        display: grid;
+        grid-template-columns: minmax(190px, 0.4fr) minmax(0, 1fr);
+        gap: clamp(28px, 7vw, 110px);
+        margin-bottom: clamp(54px, 7vw, 94px);
+      }
+
+      .ux-section-heading h2 {
+        margin: 0;
+        font-size: clamp(38px, 5vw, 70px);
+      }
+
+      .ux-section-heading p:last-child {
+        max-width: 650px;
+        align-self: end;
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.55;
+      }
+
+      .ux-section-dark .ux-section-heading p:last-child {
+        color: rgba(226, 220, 211, 0.72);
+      }
+
+      .ux-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .ux-panel {
+        min-width: 0;
+        padding: clamp(24px, 3vw, 42px);
+        border: 1px solid var(--line);
+        background: rgba(242, 236, 227, 0.56);
+      }
+
+      .ux-panel-wide {
+        grid-column: 1 / -1;
+      }
+
+      .ux-panel h3 {
+        margin-bottom: 28px;
+        font-size: 18px;
+        text-transform: uppercase;
+      }
+
+      .ux-preview {
+        min-height: 120px;
+        margin-bottom: 22px;
+      }
+
+      .ux-class-label {
+        display: block;
+        width: 100%;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+
+      .ux-section-dark .ux-class-label {
+        border-color: rgba(226, 220, 211, 0.18);
+        color: rgba(226, 220, 211, 0.58);
+      }
+
+      .ux-swatches {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .ux-swatch {
+        min-width: 0;
+        margin: 0;
+        border: 1px solid var(--line);
+        background: var(--cream);
+      }
+
+      .ux-swatch-color {
+        display: block;
+        height: clamp(110px, 13vw, 175px);
+        background: var(--swatch);
+      }
+
+      .ux-swatch figcaption {
+        padding: 16px;
+      }
+
+      .ux-swatch strong,
+      .ux-swatch span {
+        display: block;
+      }
+
+      .ux-swatch strong {
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+
+      .ux-swatch span {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.55;
+      }
+
+      .ux-type-sample + .ux-type-sample {
+        margin-top: 34px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+
+      .ux-type-brand {
+        font-family: "Syne", "Raleway", sans-serif;
+        font-size: clamp(66px, 10vw, 132px);
+        font-weight: 800;
+        line-height: 0.8;
+      }
+
+      .ux-type-h1,
+      .ux-type-h2,
+      .ux-type-h3,
+      .ux-type-body {
+        margin-bottom: 14px;
+      }
+
+      .ux-type-h1 {
+        font-size: clamp(42px, 7vw, 82px);
+        font-weight: 900;
+        line-height: 0.98;
+      }
+
+      .ux-type-h2 {
+        font-size: clamp(36px, 5.2vw, 72px);
+        font-weight: 900;
+        line-height: 0.98;
+      }
+
+      .ux-type-h3 {
+        font-size: 22px;
+        font-weight: 900;
+        line-height: 0.98;
+      }
+
+      .ux-type-body {
+        max-width: 650px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .ux-button-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .ux-state {
+        display: grid;
+        min-height: 140px;
+        place-items: center;
+        padding: 18px;
+        border: 1px dashed rgba(226, 220, 211, 0.28);
+      }
+
+      .ux-state small {
+        align-self: end;
+        color: rgba(226, 220, 211, 0.62);
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .ux-force-hover {
+        translate: 0 -2px;
+        background: #c8744c;
+      }
+
+      .ux-force-active {
+        translate: 0 1px;
+        background: #9d4f30;
+      }
+
+      .button:disabled,
+      .ux-force-disabled {
+        opacity: 0.38;
+        cursor: not-allowed;
+        translate: 0 0;
+      }
+
+      .ux-form-stage {
+        padding: clamp(24px, 5vw, 70px);
+        background:
+          linear-gradient(rgba(226, 220, 211, 0.1), rgba(226, 220, 211, 0.1)),
+          url("assets/images/para contacto.png") center / cover;
+      }
+
+      .ux-form-stage .contact-form {
+        margin: 0;
+      }
+
+      .ux-input-states {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 32px;
+      }
+
+      .ux-input-states label {
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .ux-input-states input {
+        display: block;
+        width: 100%;
+        margin-top: 8px;
+        border: 0;
+        padding: 14px 16px;
+        background: #fff;
+        color: var(--ink);
+        font: inherit;
+        outline: 1px solid transparent;
+      }
+
+      .ux-input-states .ux-input-focus {
+        outline-color: rgba(7, 7, 7, 0.42);
+      }
+
+      .ux-input-states input:disabled {
+        opacity: 0.46;
+      }
+
+      .ux-card-stage {
+        display: grid;
+        grid-template-columns: minmax(250px, 0.75fr) minmax(280px, 1.25fr);
+        gap: 22px;
+        align-items: center;
+      }
+
+      .ux-card-stage .course-card {
+        max-width: 390px;
+      }
+
+      .ux-card-stage .result-case {
+        margin: 0;
+      }
+
+      .ux-stack-list {
+        display: grid;
+        gap: 1px;
+        border: 1px solid rgba(226, 220, 211, 0.18);
+        background: rgba(226, 220, 211, 0.18);
+      }
+
+      .ux-stack-item {
+        display: grid;
+        grid-template-columns: minmax(130px, 0.35fr) minmax(0, 1fr);
+        gap: 24px;
+        padding: 24px;
+        background: var(--ink);
+      }
+
+      .ux-stack-item strong {
+        color: var(--orange);
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      .ux-stack-item p {
+        margin: 0;
+        color: rgba(226, 220, 211, 0.75);
+      }
+
+      .ux-nav-example {
+        position: relative;
+        top: auto;
+        z-index: 1;
+        margin: 0 calc(clamp(24px, 3vw, 42px) * -1);
+        box-shadow: var(--shadow);
+      }
+
+      .ux-nav-note {
+        margin: 22px 0 0;
+        font-size: 13px;
+      }
+
+      @media (max-width: 980px) {
+        .ux-swatches,
+        .ux-button-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .ux-card-stage {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .ux-section-heading,
+        .ux-grid,
+        .ux-input-states {
+          grid-template-columns: 1fr;
+        }
+
+        .ux-panel-wide {
+          grid-column: auto;
+        }
+
+        .ux-swatches {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .ux-button-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .ux-stack-item {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .ux-nav-example {
+          margin-right: -24px;
+          margin-left: -24px;
+        }
+      }
+    </style>
+  </head>
+  <body class="ux-library-page">
+    <header class="site-header" data-header>
+      <a class="brand" href="index.html#inicio" aria-label="Ir al inicio de RAÍZ">
+        <span class="brand-name">RAÍZ</span>
+        <span class="brand-description">Carpintería<br />e intervención<br />de muebles</span>
+      </a>
+
+      <button
+        class="search-toggle"
+        type="button"
+        aria-label="Abrir buscador"
+        aria-expanded="false"
+        aria-controls="header-search"
+        data-search-toggle
+      >
+        <span class="search-toggle-icon" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" aria-label="Secciones de la biblioteca" data-nav>
+        <a href="#identidad">Identidad</a>
+        <a href="#componentes">Componentes</a>
+        <a href="#estructura">Estructura</a>
+        <a href="#navegacion">Navegación</a>
+        <a href="index.html">Ver sitio</a>
+      </nav>
+
+      <div class="header-search" id="header-search" data-header-search hidden>
+        <div class="header-search-inner">
+          <form class="header-search-form" role="search" data-search-form>
+            <label class="sr-only" for="site-search-input">Buscar en esta página</label>
+            <input
+              id="site-search-input"
+              type="search"
+              placeholder="¿Qué estás buscando?"
+              autocomplete="off"
+              data-search-input
+            />
+            <button type="submit">Buscar</button>
+          </form>
+          <div class="header-search-results" aria-live="polite" data-search-results></div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="ux-library-hero section-pad" id="inicio" aria-labelledby="library-title">
+        <p class="eyebrow">Sistema visual · RAÍZ</p>
+        <h1 id="library-title">Biblioteca UX/UI</h1>
+        <p>
+          La valija de herramientas del sitio: identidad, componentes y patrones reales reunidos en una sola página.
+        </p>
+      </section>
+
+      <section class="ux-section section-pad" id="identidad" aria-labelledby="identity-title">
+        <header class="ux-section-heading">
+          <div>
+            <p class="eyebrow">01 · Estilos core</p>
+            <h2 id="identity-title">Identidad visual</h2>
+          </div>
+          <p>
+            La interfaz combina una base cálida y editorial con negro de alto contraste, acentos terracota y tipografía de gran presencia.
+          </p>
+        </header>
+
+        <div class="ux-grid">
+          <article class="ux-panel ux-panel-wide">
+            <h3>Paleta detectada en CSS</h3>
+            <div class="ux-preview ux-swatches">
+              <figure class="ux-swatch" style="--swatch: #e2dcd3">
+                <span class="ux-swatch-color"></span>
+                <figcaption><strong>Paper</strong><span>#E2DCD3</span><span>rgb(226, 220, 211)</span></figcaption>
+              </figure>
+              <figure class="ux-swatch" style="--swatch: #070707">
+                <span class="ux-swatch-color"></span>
+                <figcaption><strong>Ink</strong><span>#070707</span><span>rgb(7, 7, 7)</span></figcaption>
+              </figure>
+              <figure class="ux-swatch" style="--swatch: #b7643e">
+                <span class="ux-swatch-color"></span>
+                <figcaption><strong>Orange</strong><span>#B7643E</span><span>rgb(183, 100, 62)</span></figcaption>
+              </figure>
+              <figure class="ux-swatch" style="--swatch: #5b544d">
+                <span class="ux-swatch-color"></span>
+                <figcaption><strong>Muted</strong><span>#5B544D</span><span>rgb(91, 84, 77)</span></figcaption>
+              </figure>
+              <figure class="ux-swatch" style="--swatch: #d76a32">
+                <span class="ux-swatch-color"></span>
+                <figcaption><strong>Orange bright</strong><span>#D76A32</span><span>rgb(215, 106, 50)</span></figcaption>
+              </figure>
+              <figure class="ux-swatch" style="--swatch: #0d615f">
+                <span class="ux-swatch-color"></span>
+                <figcaption><strong>Teal</strong><span>#0D615F</span><span>rgb(13, 97, 95)</span></figcaption>
+              </figure>
+              <figure class="ux-swatch" style="--swatch: #f2ece3">
+                <span class="ux-swatch-color"></span>
+                <figcaption><strong>Cream</strong><span>#F2ECE3</span><span>rgb(242, 236, 227)</span></figcaption>
+              </figure>
+              <figure class="ux-swatch" style="--swatch: rgba(7, 7, 7, 0.14)">
+                <span class="ux-swatch-color"></span>
+                <figcaption><strong>Line</strong><span>rgba(7, 7, 7, .14)</span><span>Bordes y divisores</span></figcaption>
+              </figure>
+            </div>
+            <code class="ux-class-label">:root · --paper · --ink · --orange · --muted · --orange-bright · --teal · --cream · --line</code>
+          </article>
+
+          <article class="ux-panel">
+            <h3>Marca</h3>
+            <div class="ux-preview">
+              <div class="ux-type-brand">RAÍZ</div>
+              <p>Syne ExtraBold · 800</p>
+            </div>
+            <code class="ux-class-label">.brand-name · font-family: "Syne" · font-weight: 800</code>
+          </article>
+
+          <article class="ux-panel">
+            <h3>Volanta y cuerpo</h3>
+            <div class="ux-preview">
+              <p class="eyebrow">Academia de formación</p>
+              <p class="ux-type-body">Restauramos piezas con historia y las llevamos a una nueva vida contemporánea.</p>
+            </div>
+            <code class="ux-class-label">.eyebrow · p · font-family: "Raleway"</code>
+          </article>
+
+          <article class="ux-panel ux-panel-wide">
+            <h3>Escala tipográfica</h3>
+            <div class="ux-preview">
+              <div class="ux-type-sample">
+                <div class="ux-type-h1">Título principal H1</div>
+                <code class="ux-class-label">h1 · clamp(42px, 7vw, 82px) · 900 · line-height 0.98</code>
+              </div>
+              <div class="ux-type-sample">
+                <div class="ux-type-h2">Título de sección H2</div>
+                <code class="ux-class-label">h2 · clamp(36px, 5.2vw, 72px) · 900 · line-height 0.98</code>
+              </div>
+              <div class="ux-type-sample">
+                <div class="ux-type-h3">Título de componente H3</div>
+                <code class="ux-class-label">h3 · 22px · 900 · line-height 0.98</code>
+              </div>
+              <div class="ux-type-sample">
+                <p class="ux-type-body">Texto de cuerpo con una medida cómoda, peso medio y un interlineado pensado para lectura clara.</p>
+                <code class="ux-class-label">p · 16px · 500 · line-height 1.5</code>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="ux-section ux-section-dark section-pad" id="componentes" aria-labelledby="components-title">
+        <header class="ux-section-heading">
+          <div>
+            <p class="eyebrow">02 · Interactivos</p>
+            <h2 id="components-title">Componentes UI</h2>
+          </div>
+          <p>
+            Muestras vivas de los controles presentes en el proyecto. Pasá el cursor o usá el teclado para probar los estados reales.
+          </p>
+        </header>
+
+        <div class="ux-grid">
+          <article class="ux-panel ux-panel-wide" style="background: rgba(242, 236, 227, 0.04); border-color: rgba(226, 220, 211, 0.18)">
+            <h3>Botón de acento · estados</h3>
+            <div class="ux-preview ux-button-grid">
+              <div class="ux-state">
+                <a class="button button-accent" href="#formularios">Normal</a>
+                <small>Normal</small>
+              </div>
+              <div class="ux-state">
+                <a class="button button-accent ux-force-hover" href="#formularios">Hover</a>
+                <small>:hover / :focus-visible</small>
+              </div>
+              <div class="ux-state">
+                <a class="button button-accent ux-force-active" href="#formularios">Activo</a>
+                <small>:active</small>
+              </div>
+              <div class="ux-state">
+                <button class="button button-accent" type="button" disabled>Deshabilitado</button>
+                <small>:disabled</small>
+              </div>
+            </div>
+            <code class="ux-class-label">.button.button-accent · :hover · :focus-visible · :active · :disabled</code>
+          </article>
+
+          <article class="ux-panel" style="background: rgba(242, 236, 227, 0.04); border-color: rgba(226, 220, 211, 0.18)">
+            <h3>Variantes</h3>
+            <div class="ux-preview" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center">
+              <a class="button button-dark" href="#formularios">Oscuro</a>
+              <a class="button button-light" href="#formularios">Claro</a>
+              <a class="button button-accent" href="#formularios">Acento</a>
+            </div>
+            <code class="ux-class-label">.button-dark · .button-light · .button-accent</code>
+          </article>
+
+          <article class="ux-panel" style="background: rgba(242, 236, 227, 0.04); border-color: rgba(226, 220, 211, 0.18)">
+            <h3>Enlace editorial</h3>
+            <div class="ux-preview restoration-copy" style="position: static; transform: none; color: var(--paper)">
+              <a href="#formularios">Saber más <span aria-hidden="true">→</span></a>
+            </div>
+            <code class="ux-class-label">.restoration-copy &gt; a</code>
+          </article>
+
+          <article class="ux-panel ux-panel-wide" id="formularios" style="background: rgba(242, 236, 227, 0.04); border-color: rgba(226, 220, 211, 0.18)">
+            <h3>Formulario de contacto e inputs</h3>
+            <div class="ux-preview ux-form-stage">
+              <form class="contact-form" data-demo-form>
+                <div class="contact-fields">
+                  <label>
+                    <span class="sr-only">Nombre</span>
+                    <input type="text" name="nombre-demo" placeholder="Nombre" autocomplete="name" required />
+                  </label>
+                  <label>
+                    <span class="sr-only">Email</span>
+                    <input type="email" name="email-demo" placeholder="Email" autocomplete="email" required />
+                  </label>
+                </div>
+                <label>
+                  <span class="sr-only">Mensaje</span>
+                  <textarea name="mensaje-demo" placeholder="Mensaje" rows="5" required></textarea>
+                </label>
+                <button type="submit">Enviar consulta</button>
+              </form>
+
+              <div class="ux-input-states" aria-label="Estados de campo">
+                <label>Normal<input type="text" placeholder="Escribí tu nombre" /></label>
+                <label>Focus<input class="ux-input-focus" type="text" value="Ana" /></label>
+                <label>Deshabilitado<input type="text" placeholder="No disponible" disabled /></label>
+              </div>
+            </div>
+            <code class="ux-class-label">.contact-form · .contact-fields · input · textarea · button</code>
+          </article>
+
+          <article class="ux-panel ux-panel-wide" style="background: rgba(242, 236, 227, 0.04); border-color: rgba(226, 220, 211, 0.18)">
+            <h3>Tarjetas detectadas</h3>
+            <div class="ux-preview ux-card-stage">
+              <article class="course-card">
+                <a href="paginadetalle.html" aria-label="Ver curso de restauración de sillas">
+                  <img src="assets/images/aprendeconraiz/cursosnuevos1.png" alt="Curso de restauración de sillas" />
+                  <span class="course-price">$110.000 ARS</span>
+                  <span class="course-cta">Saber más</span>
+                </a>
+              </article>
+
+              <article class="result-case">
+                <div class="result-case-top">
+                  <p>Caso destacado</p>
+                  <span>/01</span>
+                </div>
+                <div class="result-case-body">
+                  <div class="result-case-copy">
+                    <h3>Silla familiar restaurada</h3>
+                    <p>De una pieza con desgaste a un mueble renovado que vuelve a ser parte del hogar.</p>
+                    <a href="index.html#contacto">Saber más</a>
+                  </div>
+                  <img
+                    class="result-case-image"
+                    src="assets/images/seccionresultadosalavista/restauradadetalle.png"
+                    alt="Detalle de madera y esterilla restauradas"
+                  />
+                </div>
+              </article>
+            </div>
+            <code class="ux-class-label">.course-card · .course-price · .course-cta · .result-case</code>
+          </article>
+        </div>
+      </section>
+
+      <section class="ux-section section-pad" id="estructura" aria-labelledby="structure-title">
+        <header class="ux-section-heading">
+          <div>
+            <p class="eyebrow">03 · Base técnica</p>
+            <h2 id="structure-title">Estructura y layout</h2>
+          </div>
+          <p>
+            El proyecto está construido con tecnologías web nativas y una arquitectura directa, sin dependencias innecesarias.
+          </p>
+        </header>
+
+        <div class="ux-stack-list">
+          <article class="ux-stack-item">
+            <strong>HTML5</strong>
+            <p>Estructura semántica con header, nav, main, section, article, figure, form y footer.</p>
+          </article>
+          <article class="ux-stack-item">
+            <strong>CSS3 propio</strong>
+            <p>Variables globales, Grid, Flexbox, clamp(), media queries, transiciones y animaciones en <code>styles.css</code>.</p>
+          </article>
+          <article class="ux-stack-item">
+            <strong>JavaScript nativo</strong>
+            <p>Interacciones, búsqueda, sliders, reveals, modales y accesibilidad sin frameworks, centralizados en <code>script.js</code>.</p>
+          </article>
+          <article class="ux-stack-item">
+            <strong>Fuentes</strong>
+            <p>Raleway y Syne se cargan desde Google Fonts. No se detectaron Bootstrap, React, jQuery ni librerías de íconos.</p>
+          </article>
+          <article class="ux-stack-item">
+            <strong>Layout responsive</strong>
+            <p>Contenedores fluidos con <code>clamp()</code> y quiebres principales en 1120, 980 y 760 px.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="ux-section section-pad" id="navegacion" aria-labelledby="navigation-title">
+        <header class="ux-section-heading">
+          <div>
+            <p class="eyebrow">04 · Patrones</p>
+            <h2 id="navigation-title">Navegación</h2>
+          </div>
+          <p>
+            El header sticky combina marca, navegación subrayada y búsqueda desplegable. En mobile se priorizan marca y buscador.
+          </p>
+        </header>
+
+        <article class="ux-panel">
+          <h3>Navbar · réplica en vivo</h3>
+          <div class="ux-preview">
+            <header class="site-header ux-nav-example">
+              <a class="brand" href="index.html#inicio" aria-label="Ir al inicio de RAÍZ">
+                <span class="brand-name">RAÍZ</span>
+                <span class="brand-description">Carpintería<br />e intervención<br />de muebles</span>
+              </a>
+              <button class="search-toggle" type="button" aria-label="Ejemplo de buscador">
+                <span class="search-toggle-icon" aria-hidden="true"></span>
+              </button>
+              <nav class="site-nav" aria-label="Ejemplo de navegación">
+                <a href="index.html#restauracion">Restauración</a>
+                <a href="index.html#academia">Academia</a>
+                <a href="index.html#capsula">Cápsula</a>
+                <a href="index.html#nosotros">Sobre Raíz</a>
+                <a href="index.html#contacto">Contacto</a>
+                <a href="biblioteca-ux.html">BIBLIOTECA UI</a>
+              </nav>
+            </header>
+            <p class="ux-nav-note">Sticky en desktop · navegación oculta debajo de 760 px · buscador siempre disponible.</p>
+          </div>
+          <code class="ux-class-label">.site-header · .brand · .site-nav · .search-toggle · .header-search</code>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer" aria-label="Pie de página">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#inicio" aria-label="Volver al inicio">RAÍZ</a>
+          <p>Restauración de muebles, formación online y futuras piezas cápsula con mirada contemporánea.</p>
+          <a class="footer-back-top" href="#inicio">Volver al inicio <span aria-hidden="true">↑</span></a>
+        </div>
+
+        <nav class="footer-nav" aria-label="Navegación secundaria">
+          <h2>Secciones</h2>
+          <a href="index.html#inicio">Home</a>
+          <a href="index.html#restauracion">Restauración</a>
+          <a href="index.html#academia">Academia</a>
+          <a href="index.html#capsula">Cápsula</a>
+          <a href="index.html#contacto">Contacto</a>
+        </nav>
+
+        <div class="footer-contact">
+          <h2>Contacto</h2>
+          <a href="mailto:hola@raizrestaura.com">hola@raizrestaura.com</a>
+          <p>Buenos Aires, Argentina</p>
+          <div class="footer-social" aria-label="Redes sociales">
+            <h2>Redes</h2>
+            <a href="index.html#contacto">Instagram</a>
+            <a href="index.html#contacto">Pinterest</a>
+          </div>
+        </div>
+
+        <div class="footer-map">
+          <h2>El taller</h2>
+          <iframe
+            src="https://www.google.com/maps?q=-34.5411267,-58.4438031&z=16&output=embed"
+            title="Ubicación del taller de RAÍZ"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <a
+            href="https://www.google.com/maps/place/Facultad+de+Arquitectura,+Dise%C3%B1o+y+Urbanismo+-+UBA/@-34.5411267,-58.4463834,17z/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Ver en Google Maps <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 RAÍZ. Todos los derechos reservados.</p>
+        <p>Biblioteca UX/UI · Sistema visual vivo</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      document.querySelector("[data-demo-form]")?.addEventListener("submit", (event) => event.preventDefault());
+    </script>
+  </body>
+</html>
