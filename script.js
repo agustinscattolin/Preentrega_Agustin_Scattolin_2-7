@@ -6,6 +6,22 @@ const searchForm = document.querySelector("[data-search-form]");
 const searchInput = document.querySelector("[data-search-input]");
 const searchResults = document.querySelector("[data-search-results]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const shouldStartAtTop = !window.location.hash;
+
+if (shouldStartAtTop) {
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
+
+  window.scrollTo(0, 0);
+  window.addEventListener(
+    "pageshow",
+    () => {
+      if (!window.location.hash) window.scrollTo(0, 0);
+    },
+    { once: true }
+  );
+}
 
 document.documentElement.classList.add("reveal-ready");
 
