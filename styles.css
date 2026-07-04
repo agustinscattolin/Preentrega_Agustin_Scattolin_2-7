@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Syne";
+  src: url("assets/fonts/syne-800-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
 :root {
   --paper: #e2dcd3;
   --ink: #070707;
@@ -8,7 +16,7 @@
   --cream: #f2ece3;
   --line: rgba(7, 7, 7, 0.14);
   --shadow: 0 24px 80px rgba(24, 17, 12, 0.16);
-  --header-height: 82px;
+  --header-height: 65px;
 }
 
 * {
@@ -105,6 +113,11 @@ img {
   mix-blend-mode: multiply;
 }
 
+.wood-particle--on-dark {
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 1px 2px rgba(226, 220, 211, 0.18));
+}
+
 @keyframes wood-dust-fall {
   0% {
     opacity: 0;
@@ -155,16 +168,16 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: var(--header-height);
   min-height: var(--header-height);
-  padding: 20px clamp(20px, 5vw, 72px);
+  padding: 8px clamp(20px, 5vw, 72px);
   background: rgba(226, 220, 211, 0.92) url("assets/images/FONDO CLARO.png") center top / cover;
   border-bottom: 1px solid transparent;
   backdrop-filter: blur(18px);
-  transition: border-color 180ms ease, min-height 180ms ease;
+  transition: border-color 180ms ease;
 }
 
 .site-header.is-scrolled {
-  min-height: 68px;
   border-color: var(--line);
 }
 
@@ -237,8 +250,8 @@ button {
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   margin-left: 28px;
   padding: 0;
   border: 0;
@@ -464,7 +477,7 @@ button {
 
 .hero-word {
   position: absolute;
-  top: clamp(38px, 7vh, 76px);
+  top: clamp(28px, 5.8vh, 64px);
   left: 11.5%;
   z-index: 1;
   width: max-content;
@@ -570,7 +583,7 @@ button {
 
 .hero-index .is-active::after {
   position: absolute;
-  top: 22px;
+  top: 16px;
   left: 4px;
   width: 1px;
   height: 38px;
@@ -580,7 +593,7 @@ button {
 
 .hero-cta {
   position: static;
-  min-width: 184px;
+  min-width: 214px;
   min-height: 38px;
   margin-top: 22px;
   padding-top: 0;
@@ -590,6 +603,7 @@ button {
 
 .hero-cta:hover,
 .hero-cta:focus-visible {
+  background: var(--orange);
   transform: translateY(-2px);
   translate: 0 0;
 }
@@ -627,16 +641,16 @@ button {
 }
 
 .hero-feature-image img {
-  width: 135%;
-  height: 135%;
-  object-fit: contain;
-  transform: translate(-13%, -8%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .hero-scroll {
   position: absolute;
   right: 2.7%;
-  bottom: 12%;
+  bottom: calc(12% + 40px);
   z-index: 6;
   color: var(--ink);
   font-size: 9px;
@@ -887,6 +901,32 @@ p {
   cursor: default;
 }
 
+.collage.has-aligned-notes .collage-note {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition:
+    opacity 320ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 420ms;
+}
+
+.collage.has-aligned-notes .collage-note.is-aligned {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collage.has-aligned-notes .collage-note {
+    transform: none;
+    transition: none;
+  }
+}
+
 .collage-note span {
   display: block;
   transform: translate(var(--note-shift-x), var(--note-shift-y));
@@ -925,6 +965,7 @@ p {
 }
 
 .note-finish {
+  --note-anchor-y: 169px;
   --note-shift-y: -3px;
   top: 14%;
   left: 7%;
@@ -935,7 +976,7 @@ p {
   left: 34px;
   width: 1px;
   height: 132px;
-  transform: scaleY(0.78);
+  transform: scaleY(1);
   transform-origin: top;
 }
 
@@ -950,6 +991,7 @@ p {
 }
 
 .note-structure {
+  --note-anchor-y: 10px;
   --note-shift-x: 3px;
   top: 16%;
   left: 61%;
@@ -960,7 +1002,7 @@ p {
   right: calc(100% + 10px);
   width: 118px;
   height: 1px;
-  transform: scaleX(0.78);
+  transform: scaleX(1);
   transform-origin: right;
 }
 
@@ -975,6 +1017,7 @@ p {
 }
 
 .note-grain {
+  --note-anchor-y: 11px;
   --note-shift-x: -3px;
   top: 69%;
   left: 39%;
@@ -984,15 +1027,15 @@ p {
 .note-grain::after {
   top: 14px;
   left: calc(100% + 10px);
-  width: 205px;
+  width: 325px;
   height: 1px;
-  transform: scaleX(0.78);
+  transform: scaleX(1);
   transform-origin: left;
 }
 
 .note-grain::before {
   top: 11px;
-  left: calc(100% + 210px);
+  left: calc(100% + 330px);
 }
 
 .note-grain:hover::after,
@@ -1001,6 +1044,7 @@ p {
 }
 
 .note-joint {
+  --note-anchor-y: 162px;
   --note-shift-y: -3px;
   top: 42%;
   right: 5%;
@@ -1011,7 +1055,7 @@ p {
   left: 24px;
   width: 1px;
   height: 125px;
-  transform: scaleY(0.78);
+  transform: scaleY(1);
   transform-origin: top;
 }
 
@@ -1079,7 +1123,24 @@ p {
 }
 
 .values-grid article {
+  --icon-sequence-delay: 40ms;
   text-align: center;
+}
+
+.reveal-ready .values-grid article.reveal-text {
+  --reveal-delay: 0ms;
+}
+
+.values-grid article:nth-child(2) {
+  --icon-sequence-delay: 170ms;
+}
+
+.values-grid article:nth-child(3) {
+  --icon-sequence-delay: 300ms;
+}
+
+.values-grid article:nth-child(4) {
+  --icon-sequence-delay: 430ms;
 }
 
 .value-dot {
@@ -1094,14 +1155,20 @@ p {
   opacity: 0;
   transform: translateY(22px) scale(0.86) rotate(-4deg);
   transition:
-    opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: calc(var(--reveal-delay, 0ms) + 80ms);
+    opacity 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--icon-sequence-delay);
 }
 
 .reveal-ready .values-grid article.is-visible .value-dot {
   opacity: 1;
   transform: translateY(0) scale(1) rotate(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready .values-grid article .value-dot {
+    transition: none;
+  }
 }
 
 .value-dot img {
@@ -3364,8 +3431,8 @@ body.capsule-modal-open {
   position: sticky;
   top: 0;
   min-height: var(--header-height);
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   background: rgba(226, 220, 211, 0.88) url("assets/images/FONDO CLARO.png") center top / cover;
 }
 
@@ -3454,6 +3521,7 @@ body.capsule-modal-open {
 }
 
 .course-fact {
+  --fact-sequence-delay: 40ms;
   display: flex;
   align-items: center;
   min-width: 0;
@@ -3461,6 +3529,22 @@ body.capsule-modal-open {
   padding: 8px 10px;
   background: #000;
   color: var(--paper);
+}
+
+.reveal-ready .course-fact.reveal-text {
+  --reveal-delay: var(--fact-sequence-delay);
+}
+
+.course-fact:nth-child(2) {
+  --fact-sequence-delay: 170ms;
+}
+
+.course-fact:nth-child(3) {
+  --fact-sequence-delay: 300ms;
+}
+
+.course-fact:nth-child(4) {
+  --fact-sequence-delay: 430ms;
 }
 
 .course-fact img {
@@ -3649,7 +3733,7 @@ body.capsule-modal-open {
 
 .learning-card-number::after {
   display: block;
-  width: 42px;
+  width: 100%;
   height: 1px;
   margin-top: 9px;
   background: currentColor;
@@ -5526,6 +5610,13 @@ body.capsule-modal-open {
   }
 }
 
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .home-page .hero-story {
+    right: 11%;
+    width: 270px;
+  }
+}
+
 @media (max-width: 980px) {
   .section-pad {
     padding: 76px clamp(18px, 5vw, 42px);
@@ -5675,7 +5766,7 @@ body.capsule-modal-open {
 
 @media (max-width: 760px) {
   :root {
-    --header-height: 72px;
+    --header-height: 65px;
   }
 
   .site-header {
@@ -6994,8 +7085,8 @@ body.capsule-modal-open {
 @media (max-width: 760px) {
   .detail-header {
     min-height: var(--header-height);
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 
   .detail-hero {
@@ -7323,7 +7414,54 @@ body.capsule-modal-open {
   }
 }
 
+@media (min-width: 1200px) {
+  .home-page .hero-story {
+    width: 283.5px;
+  }
+
+  .home-page .manifest .section-intro {
+    width: min(1100px, 100%);
+  }
+
+  .home-page #manifest-title,
+  .home-page #service-title,
+  .home-page #academy-title,
+  .home-page #results-title,
+  .home-page #material-library-title,
+  .home-page #photo-start-title,
+  .home-page #capsule-title {
+    font-size: 72px;
+  }
+}
+
 @media (min-width: 1600px) {
+  .home-page .hero-media {
+    top: 19%;
+  }
+
+  .home-page .note-structure {
+    --note-anchor-y: 10px;
+    top: 23%;
+  }
+
+  .home-page .note-structure::after {
+    top: 13px;
+    right: calc(100% + 10px);
+    width: 153px;
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+
+  .home-page .note-structure::before {
+    top: 10px;
+    right: calc(100% + 158px);
+  }
+
+  .home-page .note-structure:hover::after,
+  .home-page .note-structure:focus-visible::after {
+    transform: scaleX(1);
+  }
+
   .detail-hero-copy h1 {
     font-size: 72px;
   }

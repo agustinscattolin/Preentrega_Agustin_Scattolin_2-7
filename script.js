@@ -27,7 +27,10 @@ document.documentElement.classList.add("reveal-ready");
 
 const touchPointer = window.matchMedia("(pointer: coarse)").matches;
 const woodDustConfig = {
-  colors: ["#e2dcd3", "#d6b98c", "#b96842", "#c88b54", "#8f5a34"],
+  colors: {
+    light: ["#e2dcd3", "#d6b98c", "#b96842", "#c88b54", "#8f5a34"],
+    dark: ["#f2ece3", "#e2dcd3", "#e5b887", "#d98b59", "#c97b4f"],
+  },
   maxParticlesPerMove: 2,
   minTimeBetweenBursts: 34,
   maxParticlesOnScreen: 80,
@@ -38,14 +41,37 @@ let activeDustParticles = 0;
 
 const randomBetween = (min, max) => Math.random() * (max - min) + min;
 
-const createWoodParticle = (x, y) => {
+const isDarkDustSurface = (target) => {
+  let element = target instanceof Element ? target : document.body;
+
+  while (element) {
+    const colorValues = getComputedStyle(element).backgroundColor.match(/[\d.]+/g);
+
+    if (colorValues && Number(colorValues[3] ?? 1) > 0.08) {
+      const [red, green, blue] = colorValues.slice(0, 3).map((value) => Number(value) / 255);
+      const toLinear = (channel) =>
+        channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+      const luminance =
+        0.2126 * toLinear(red) + 0.7152 * toLinear(green) + 0.0722 * toLinear(blue);
+
+      return luminance < 0.18;
+    }
+
+    element = element.parentElement;
+  }
+
+  return false;
+};
+
+const createWoodParticle = (x, y, isDarkSurface) => {
   if (activeDustParticles >= woodDustConfig.maxParticlesOnScreen) return;
 
   const particle = document.createElement("span");
   const size = randomBetween(3, 8);
   const duration = randomBetween(620, 980);
+  const palette = isDarkSurface ? woodDustConfig.colors.dark : woodDustConfig.colors.light;
 
-  particle.className = "wood-particle";
+  particle.className = `wood-particle${isDarkSurface ? " wood-particle--on-dark" : ""}`;
   particle.style.setProperty("--particle-x", `${x + randomBetween(-8, 8)}px`);
   particle.style.setProperty("--particle-y", `${y + randomBetween(-8, 8)}px`);
   particle.style.setProperty("--particle-width", `${size * randomBetween(1.2, 2.2)}px`);
@@ -55,10 +81,13 @@ const createWoodParticle = (x, y) => {
   particle.style.setProperty("--particle-rotation", `${randomBetween(0, 180)}deg`);
   particle.style.setProperty("--particle-spin", `${randomBetween(-150, 150)}deg`);
   particle.style.setProperty("--particle-duration", `${duration}ms`);
-  particle.style.setProperty("--particle-opacity", `${randomBetween(0.28, 0.58)}`);
+  particle.style.setProperty(
+    "--particle-opacity",
+    `${isDarkSurface ? randomBetween(0.42, 0.72) : randomBetween(0.28, 0.58)}`
+  );
   particle.style.setProperty(
     "--particle-color",
-    woodDustConfig.colors[Math.floor(Math.random() * woodDustConfig.colors.length)]
+    palette[Math.floor(Math.random() * palette.length)]
   );
 
   activeDustParticles += 1;
@@ -80,9 +109,10 @@ const handleWoodDust = (event) => {
   if (now - lastDustTime < woodDustConfig.minTimeBetweenBursts) return;
 
   lastDustTime = now;
+  const isDarkSurface = isDarkDustSurface(event.target);
 
   for (let index = 0; index < woodDustConfig.maxParticlesPerMove; index += 1) {
-    createWoodParticle(event.clientX, event.clientY);
+    createWoodParticle(event.clientX, event.clientY, isDarkSurface);
   }
 };
 
@@ -281,6 +311,14 @@ if (courseCarousel && coursePagination) {
 }
 
 const revealImages = document.querySelectorAll(".reveal-image");
+const collage = document.querySelector(".collage");
+const collageNotePairs = [...document.querySelectorAll("[data-collage-note]")]
+  .map((note) => ({
+    note,
+    tile: collage?.querySelector(`[data-collage-item="${note.dataset.collageNote}"]`),
+    fallbackAnchorY: Number(note.dataset.anchorY) || 0,
+  }))
+  .filter(({ tile }) => tile);
 const restorationSlider = document.querySelector("[data-restoration-slider]");
 const restorationSteps = document.querySelectorAll("[data-restoration-step]");
 const restorationViewport = restorationSlider?.querySelector(".restoration-viewport");
@@ -288,6 +326,10 @@ const restorationProgressItems = document.querySelectorAll("[data-restoration-pr
 const learningPath = document.querySelector("[data-learning-path]");
 const learningPathCards = learningPath?.querySelectorAll(".learning-card") ?? [];
 const learningPathHorizontalQuery = window.matchMedia("(max-width: 760px)");
+
+if (collage && collageNotePairs.length) {
+  collage.classList.add("has-aligned-notes");
+}
 
 if (learningPath && learningPathCards.length && !reducedMotion && !learningPathHorizontalQuery.matches) {
   learningPath.classList.add("is-scroll-ready");
@@ -966,6 +1008,23 @@ const updateLearningPath = () => {
   });
 };
 
+const updateCollageNotes = () => {
+  if (!collage || !collageNotePairs.length) return;
+
+  const collageTop = collage.getBoundingClientRect().top;
+
+  collageNotePairs.forEach(({ note, tile, fallbackAnchorY }) => {
+    const tileRect = tile.getBoundingClientRect();
+    const cssAnchorY = Number.parseFloat(getComputedStyle(note).getPropertyValue("--note-anchor-y"));
+    const anchorY = Number.isFinite(cssAnchorY) ? cssAnchorY : fallbackAnchorY;
+    const targetY = collageTop + note.offsetTop + anchorY;
+    const isAligned = tileRect.top <= targetY + 8 && tileRect.bottom >= targetY - 8;
+
+    note.classList.toggle("is-aligned", isAligned);
+    note.setAttribute("aria-hidden", String(!isAligned));
+  });
+};
+
 const updateRevealImages = () => {
   const viewportHeight = window.innerHeight;
 
@@ -985,6 +1044,7 @@ const updateRevealImages = () => {
     }
   });
 
+  updateCollageNotes();
   updateRestorationParallax();
   updateLearningPath();
   ticking = false;
@@ -1037,6 +1097,52 @@ if (reducedMotion || !("IntersectionObserver" in window)) {
   );
 
   revealTextItems.forEach((item) => revealTextObserver.observe(item));
+}
+
+const courseOfferCounters = [...document.querySelectorAll("[data-count-target]")];
+
+if (courseOfferCounters.length && !reducedMotion && "IntersectionObserver" in window) {
+  const counterDuration = 1300;
+  const counterObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const counter = entry.target;
+        const target = Number(counter.dataset.countTarget);
+        const prefix = counter.dataset.countPrefix ?? "";
+        const suffix = counter.dataset.countSuffix ?? "";
+        const delay = courseOfferCounters.indexOf(counter) * 140;
+
+        const renderValue = (value) => {
+          counter.textContent = `${prefix}${Math.round(value).toLocaleString("es-AR")}${suffix}`;
+        };
+
+        renderValue(0);
+        window.setTimeout(() => {
+          const startTime = performance.now();
+
+          const updateCounter = (currentTime) => {
+            const progress = Math.min((currentTime - startTime) / counterDuration, 1);
+            const easedProgress = 1 - (1 - progress) ** 3;
+            renderValue(target * easedProgress);
+
+            if (progress < 1) window.requestAnimationFrame(updateCounter);
+          };
+
+          window.requestAnimationFrame(updateCounter);
+        }, delay);
+
+        observer.unobserve(counter);
+      });
+    },
+    {
+      rootMargin: "0px 0px -12% 0px",
+      threshold: 0.35,
+    }
+  );
+
+  courseOfferCounters.forEach((counter) => counterObserver.observe(counter));
 }
 
 const programSection = document.querySelector("[data-program]");

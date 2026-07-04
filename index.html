@@ -8,10 +8,17 @@
       name="description"
       content="Raíz restaura muebles con historia y los transforma en piezas contemporáneas. Servicio integral, academia online y futuras colecciones cápsula."
     />
+    <link
+      rel="preload"
+      href="assets/fonts/syne-800-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Syne:wght@800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -102,7 +109,7 @@
 
         <a class="hero-feature" href="#restauracion" aria-label="Conocer el servicio de restauración integral">
           <span class="hero-feature-image">
-            <img src="assets/images/hero-chair-cutout.png" alt="" />
+            <img src="assets/images/circulohero.png" alt="" />
           </span>
           <span>Restauración<br />integral<br /><b>+ Info</b></span>
         </a>
@@ -113,16 +120,16 @@
         </section>
 
         <section class="collage section-pad" id="galeria" aria-label="Detalles de restauración contemporánea">
-          <figure class="collage-tile tile-left reveal-image reveal-from-left">
+          <figure class="collage-tile tile-left reveal-image reveal-from-left" data-collage-item="finish">
             <img loading="lazy" decoding="async" src="assets/images/imgscroll1.png" alt="Detalle del acabado protegido de una mesa restaurada" />
           </figure>
-          <figure class="collage-tile tile-main reveal-image reveal-from-bottom">
+          <figure class="collage-tile tile-main reveal-image reveal-from-bottom" data-collage-item="structure">
             <img loading="lazy" decoding="async" src="assets/images/imgscroll2.jpg" alt="Estructura completa de madera vista desde abajo" />
           </figure>
-          <figure class="collage-tile tile-orange reveal-image reveal-from-bottom">
+          <figure class="collage-tile tile-orange reveal-image reveal-from-bottom" data-collage-item="grain">
             <img loading="lazy" decoding="async" src="assets/images/imgscroll3.png" alt="Detalle de la veta original y el esterillado de una silla" />
           </figure>
-          <figure class="collage-tile tile-side reveal-image reveal-from-right">
+          <figure class="collage-tile tile-side reveal-image reveal-from-right" data-collage-item="joint">
             <img loading="lazy" decoding="async" src="assets/images/imgscroll4.png" alt="Detalle visible de una unión de madera" />
           </figure>
 
@@ -130,16 +137,16 @@
             <img loading="lazy" decoding="async" src="assets/images/lamateriahabla.png" alt="" />
           </figure>
 
-          <div class="collage-note note-finish" tabindex="0">
+          <div class="collage-note note-finish" tabindex="0" data-collage-note="finish" data-anchor-y="169">
             <span>Acabado<br />protegido</span>
           </div>
-          <div class="collage-note note-structure" tabindex="0">
+          <div class="collage-note note-structure" tabindex="0" data-collage-note="structure" data-anchor-y="10">
             <span>Estructura<br />completa</span>
           </div>
-          <div class="collage-note note-grain" tabindex="0">
+          <div class="collage-note note-grain" tabindex="0" data-collage-note="grain" data-anchor-y="11">
             <span>Veta<br />original</span>
           </div>
-          <div class="collage-note note-joint" tabindex="0">
+          <div class="collage-note note-joint" tabindex="0" data-collage-note="joint" data-anchor-y="162">
             <span>Unión<br />visible</span>
           </div>
         </section>
