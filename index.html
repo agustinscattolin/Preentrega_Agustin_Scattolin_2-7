@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Roboto:wght@900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -41,7 +41,18 @@
         <span class="search-toggle-icon" aria-hidden="true"></span>
       </button>
 
-      <nav class="site-nav" aria-label="Navegación principal" data-nav>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="site-nav"
+        data-menu-toggle
+      >
+        <span class="menu-toggle-icon" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navegación principal" data-nav>
         <a href="#restauracion">Restauración</a>
         <a href="#academia">Academia</a>
         <a href="#capsula">Cápsula</a>
@@ -100,6 +111,13 @@
             alt="Sillón restaurado de madera y tapizado claro"
             decoding="async"
             fetchpriority="high"
+          />
+          <img
+            class="hero-mobile-story"
+            src="assets/images/fraseheromobile.png"
+            alt=""
+            aria-hidden="true"
+            decoding="async"
           />
         </figure>
 
@@ -162,7 +180,7 @@
 
         <a class="manifest-cta button button-accent reveal-text reveal-delay-2" href="#restauracion">Quiero restaurar mi mueble</a>
 
-        <div class="values-grid">
+        <div class="values-grid" data-values-carousel>
           <article class="reveal-text">
             <span class="value-dot" aria-hidden="true">
               <img loading="lazy" decoding="async" src="assets/images/iconoshome1.png" alt="" />
@@ -192,6 +210,12 @@
             <p>Reutilizamos materiales para crear con conciencia</p>
           </article>
         </div>
+        <div class="values-pagination" aria-label="Elegir valor de Raíz" data-values-pagination>
+          <button class="is-active" type="button" aria-label="Mostrar Nueva vida" aria-current="true"></button>
+          <button type="button" aria-label="Mostrar Respeto" aria-current="false"></button>
+          <button type="button" aria-label="Mostrar Diseño moderno" aria-current="false"></button>
+          <button type="button" aria-label="Mostrar Sustentabilidad" aria-current="false"></button>
+        </div>
       </section>
 
       <section class="restoration-story" id="restauracion" aria-labelledby="service-title">
@@ -199,7 +223,8 @@
           <p class="eyebrow reveal-text">Servicio de restauración</p>
           <h2 class="reveal-text reveal-delay-1" id="service-title">Restauración completa</h2>
           <p class="reveal-text reveal-delay-2">
-            El proceso parte del diagnóstico técnico, sigue con la reparación estructural y termina con una propuesta estética pensada para el uso real de la pieza.
+            <span class="restoration-heading-description-desktop">El proceso parte del diagnóstico técnico, sigue con la reparación estructural y termina con una propuesta estética pensada para el uso real de la pieza.</span>
+            <span class="restoration-heading-description-mobile">El proceso parte del diagnóstico técnico, sigue con la reparación estructural y termina con una propuesta estética pensada para el uso real.</span>
           </p>
         </header>
 
@@ -223,7 +248,10 @@
             <div class="restoration-copy" data-depth="-0.05">
               <span class="restoration-number">/01</span>
               <h3>Diagnóstico<br />técnico</h3>
-              <p>Evaluamos la estructura, los materiales y el desgaste para planificar una restauración precisa.</p>
+              <p>
+                <span class="restoration-description-desktop">Evaluamos la estructura, los materiales y el desgaste para planificar una restauración precisa.</span>
+                <span class="restoration-description-mobile">Evaluamos la estructura y el desgaste para planificar una restauración precisa.</span>
+              </p>
               <a href="#contacto">Saber más <span aria-hidden="true">→</span></a>
             </div>
 
@@ -307,30 +335,27 @@
           <p class="eyebrow reveal-text">Academia de formación</p>
           <h2 class="reveal-text reveal-delay-1" id="academy-title">Aprendé con Raíz</h2>
           <p class="academy-subtitle reveal-text reveal-delay-2">
-            Cursos prácticos para intervenir muebles reales con técnica,<br />
+            Cursos prácticos para intervenir muebles reales con técnica,<br class="academy-subtitle-break" />
             criterio y mirada contemporánea.
           </p>
         </div>
         <div class="course-grid" aria-label="Cursos de restauración" data-course-carousel>
           <article class="course-card reveal-text">
-            <a href="paginadetalle.html" aria-label="Saber más sobre restauración de sillas">
-              <img loading="lazy" decoding="async" src="assets/images/aprendeconraiz/cursosnuevos1.png" alt="Curso de restauración de sillas" />
-              <span class="course-price">$110.000 ARS</span>
-              <span class="course-cta">Saber más</span>
+            <a href="#academia" aria-label="Ver curso de restauración de mesas">
+              <img loading="lazy" decoding="async" src="assets/images/aprendeconraiz/cardsfinales1.png" alt="Curso de restauración de mesas: 14 clases, nivel medio y proyecto real" />
+              <span class="course-hover-cta">Ver curso</span>
             </a>
           </article>
           <article class="course-card reveal-text reveal-delay-1">
-            <a href="#academia" aria-label="Saber más sobre restauración de mesas">
-              <img loading="lazy" decoding="async" src="assets/images/aprendeconraiz/cursosnuevos2.png" alt="Curso de restauración de mesas, el más elegido" />
-              <span class="course-price">$160.000 ARS</span>
-              <span class="course-cta">Saber más</span>
+            <a href="paginadetalle.html" aria-label="Ver curso de restauración de sillas, el más elegido">
+              <img loading="lazy" decoding="async" src="assets/images/aprendeconraiz/cardsfinales2.png" alt="Curso de restauración de sillas: 10 clases, nivel base y proyecto real. El más elegido" />
+              <span class="course-hover-cta">Ver curso</span>
             </a>
           </article>
           <article class="course-card reveal-text reveal-delay-2">
-            <a href="#academia" aria-label="Saber más sobre restauración de sillones">
-              <img loading="lazy" decoding="async" src="assets/images/aprendeconraiz/cursosnuevos3.png" alt="Curso de restauración de sillones" />
-              <span class="course-price">$150.000 ARS</span>
-              <span class="course-cta">Saber más</span>
+            <a href="#academia" aria-label="Ver curso de restauración de sillones">
+              <img loading="lazy" decoding="async" src="assets/images/aprendeconraiz/cardsfinales3.png" alt="Curso de restauración de sillones: 14 clases, nivel medio y proyecto real" />
+              <span class="course-hover-cta">Ver curso</span>
             </a>
           </article>
         </div>
@@ -380,7 +405,8 @@
               <img loading="lazy" decoding="async" class="results-script reveal-text reveal-delay-1" src="assets/images/txtelcambioseve.png" alt="El cambio se ve" />
             </div>
             <p class="reveal-text reveal-delay-1">
-              Trae tu mueble desgastado, viejo o roto que nosotros nos ocupamos de revivirlo y darle el toque.
+              <span class="results-description-desktop">Trae tu mueble desgastado, viejo o roto que nosotros nos ocupamos de revivirlo y darle el toque.</span>
+              <span class="results-description-mobile">Trae tu mueble desgastado, viejo o roto que nosotros nos ocupamos de revivirlo.</span>
             </p>
             <a class="button button-accent reveal-text reveal-delay-2" href="#contacto">Me interesa</a>
           </div>
@@ -510,7 +536,7 @@
             <p class="eyebrow">Próximamente</p>
             <h2 id="capsule-mobile-title">Muebles cápsula</h2>
             <p>
-              Piezas únicas nacidas de materiales recuperados. Una colección en desarrollo donde cada fragmento vuelve a tener valor.
+              Piezas únicas nacidas de materiales recuperados, donde cada fragmento vuelve a tener valor.
             </p>
           </header>
 

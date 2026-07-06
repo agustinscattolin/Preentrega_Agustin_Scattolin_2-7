@@ -1,6 +1,7 @@
 ﻿const header = document.querySelector("[data-header]");
 const nav = document.querySelector("[data-nav]");
 const searchToggle = document.querySelector("[data-search-toggle]");
+const menuToggle = document.querySelector("[data-menu-toggle]");
 const headerSearch = document.querySelector("[data-header-search]");
 const searchForm = document.querySelector("[data-search-form]");
 const searchInput = document.querySelector("[data-search-input]");
@@ -252,11 +253,57 @@ if (searchToggle && headerSearch && searchForm && searchInput && searchResults) 
   });
 }
 
+if (menuToggle && nav) {
+  const closeMenu = (returnFocus = false) => {
+    nav.classList.remove("is-open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Abrir menú");
+    if (returnFocus) menuToggle.focus();
+  };
+
+  const openMenu = () => {
+    nav.classList.add("is-open");
+    menuToggle.setAttribute("aria-expanded", "true");
+    menuToggle.setAttribute("aria-label", "Cerrar menú");
+  };
+
+  menuToggle.addEventListener("click", () => {
+    if (menuToggle.getAttribute("aria-expanded") === "true") closeMenu(true);
+    else openMenu();
+  });
+
+  nav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => closeMenu());
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
+      closeMenu(true);
+    }
+  });
+
+  document.addEventListener("pointerdown", (event) => {
+    if (
+      menuToggle.getAttribute("aria-expanded") === "true" &&
+      !header.contains(event.target)
+    ) {
+      closeMenu();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 760) closeMenu();
+  });
+}
+
 window.addEventListener("scroll", setHeaderState, { passive: true });
 setHeaderState();
 
 const courseCarousel = document.querySelector("[data-course-carousel]");
 const coursePagination = document.querySelector("[data-course-pagination]");
+const valuesCarousel = document.querySelector("[data-values-carousel]");
+const valuesPagination = document.querySelector("[data-values-pagination]");
+const materialCarousel = document.querySelector(".material-library-board");
 
 if (courseCarousel && coursePagination) {
   const courseCards = [...courseCarousel.querySelectorAll(".course-card")];
@@ -310,8 +357,249 @@ if (courseCarousel && coursePagination) {
   updateActiveCourse();
 }
 
+if (materialCarousel && !reducedMotion) {
+  const materialMobileQuery = window.matchMedia("(max-width: 760px)");
+  const originalMaterials = [...materialCarousel.querySelectorAll(".material-item")];
+  const materialSpeed = 50;
+  let materialFrame = null;
+  let previousMaterialTime = 0;
+  let materialCycleWidth = 0;
+  let materialVisible = false;
+  let materialInteracting = false;
+  let materialResumeTimer = null;
+
+  const buildMaterialLoop = () => {
+    if (materialCarousel.querySelector("[data-material-clone]")) return;
+
+    originalMaterials.forEach((material) => {
+      const clone = material.cloneNode(true);
+      clone.dataset.materialClone = "";
+      clone.setAttribute("aria-hidden", "true");
+      clone.removeAttribute("tabindex");
+      clone.classList.remove(
+        "reveal-text",
+        "reveal-delay-1",
+        "reveal-delay-2",
+        "reveal-delay-3",
+        "is-visible"
+      );
+      materialCarousel.append(clone);
+    });
+  };
+
+  const measureMaterialLoop = () => {
+    const firstClone = materialCarousel.querySelector("[data-material-clone]");
+    if (!firstClone || !originalMaterials[0]) return;
+    materialCycleWidth = firstClone.offsetLeft - originalMaterials[0].offsetLeft;
+  };
+
+  const stopMaterialAutoplay = () => {
+    if (materialFrame) window.cancelAnimationFrame(materialFrame);
+    materialFrame = null;
+    previousMaterialTime = 0;
+  };
+
+  const runMaterialAutoplay = (time) => {
+    if (!materialMobileQuery.matches || !materialVisible || materialInteracting) {
+      stopMaterialAutoplay();
+      return;
+    }
+
+    if (previousMaterialTime && materialCycleWidth) {
+      const elapsed = Math.min(time - previousMaterialTime, 32);
+      materialCarousel.scrollLeft += (materialSpeed * elapsed) / 1000;
+
+      if (materialCarousel.scrollLeft >= materialCycleWidth) {
+        materialCarousel.scrollLeft -= materialCycleWidth;
+      }
+    }
+
+    previousMaterialTime = time;
+    materialFrame = window.requestAnimationFrame(runMaterialAutoplay);
+  };
+
+  const startMaterialAutoplay = () => {
+    if (
+      materialFrame ||
+      !materialMobileQuery.matches ||
+      !materialVisible ||
+      materialInteracting
+    ) {
+      return;
+    }
+
+    materialFrame = window.requestAnimationFrame(runMaterialAutoplay);
+  };
+
+  const pauseMaterialAutoplay = () => {
+    window.clearTimeout(materialResumeTimer);
+    materialInteracting = true;
+    stopMaterialAutoplay();
+  };
+
+  const resumeMaterialAutoplay = () => {
+    window.clearTimeout(materialResumeTimer);
+    materialResumeTimer = window.setTimeout(() => {
+      materialInteracting = false;
+      startMaterialAutoplay();
+    }, 700);
+  };
+
+  buildMaterialLoop();
+  measureMaterialLoop();
+  materialCarousel.classList.add("is-auto-scrolling");
+
+  materialCarousel.addEventListener("pointerdown", pauseMaterialAutoplay);
+  materialCarousel.addEventListener("pointerup", resumeMaterialAutoplay);
+  materialCarousel.addEventListener("pointercancel", resumeMaterialAutoplay);
+
+  const materialObserver = new IntersectionObserver(
+    ([entry]) => {
+      materialVisible = entry.isIntersecting;
+      if (materialVisible) startMaterialAutoplay();
+      else stopMaterialAutoplay();
+    },
+    { threshold: 0.15 }
+  );
+
+  materialObserver.observe(materialCarousel);
+
+  window.addEventListener("resize", () => {
+    measureMaterialLoop();
+    if (!materialMobileQuery.matches) {
+      stopMaterialAutoplay();
+      materialCarousel.scrollLeft = 0;
+      return;
+    }
+    startMaterialAutoplay();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopMaterialAutoplay();
+    else startMaterialAutoplay();
+  });
+}
+
+if (valuesCarousel && valuesPagination) {
+  const valueCards = [...valuesCarousel.querySelectorAll("article")];
+  const valueDots = [...valuesPagination.querySelectorAll("button")];
+  const valuesMobileQuery = window.matchMedia("(max-width: 760px)");
+  const autoplayDelay = 3600;
+  let activeValueIndex = 0;
+  let valuesScrollFrame = null;
+  let autoplayTimer = null;
+  let valuesCarouselVisible = !("IntersectionObserver" in window);
+
+  const setActiveValue = (activeIndex) => {
+    activeValueIndex = activeIndex;
+    valueDots.forEach((dot, index) => {
+      const isActive = index === activeIndex;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-current", String(isActive));
+    });
+  };
+
+  const scrollToValue = (index, behavior = "smooth") => {
+    const card = valueCards[index];
+    if (!card) return;
+
+    const targetLeft = card.offsetLeft - (valuesCarousel.clientWidth - card.offsetWidth) / 2;
+    valuesCarousel.scrollTo({
+      left: targetLeft,
+      behavior: reducedMotion ? "auto" : behavior,
+    });
+    setActiveValue(index);
+  };
+
+  const stopValuesAutoplay = () => {
+    window.clearInterval(autoplayTimer);
+    autoplayTimer = null;
+  };
+
+  const startValuesAutoplay = () => {
+    stopValuesAutoplay();
+    if (
+      !valuesMobileQuery.matches ||
+      !valuesCarouselVisible ||
+      reducedMotion ||
+      document.hidden
+    ) return;
+
+    autoplayTimer = window.setInterval(() => {
+      scrollToValue((activeValueIndex + 1) % valueCards.length);
+    }, autoplayDelay);
+  };
+
+  const updateActiveValue = () => {
+    const carouselCenter = valuesCarousel.scrollLeft + valuesCarousel.clientWidth / 2;
+    const closestIndex = valueCards.reduce((bestIndex, card, index) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const bestCard = valueCards[bestIndex];
+      const bestCenter = bestCard.offsetLeft + bestCard.offsetWidth / 2;
+      return Math.abs(cardCenter - carouselCenter) < Math.abs(bestCenter - carouselCenter)
+        ? index
+        : bestIndex;
+    }, 0);
+
+    setActiveValue(closestIndex);
+  };
+
+  valueDots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      scrollToValue(index);
+      startValuesAutoplay();
+    });
+  });
+
+  valuesCarousel.addEventListener(
+    "scroll",
+    () => {
+      window.cancelAnimationFrame(valuesScrollFrame);
+      valuesScrollFrame = window.requestAnimationFrame(updateActiveValue);
+    },
+    { passive: true }
+  );
+  valuesCarousel.addEventListener("pointerdown", stopValuesAutoplay);
+  valuesCarousel.addEventListener("pointerup", startValuesAutoplay);
+  valuesCarousel.addEventListener("pointercancel", startValuesAutoplay);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopValuesAutoplay();
+    else startValuesAutoplay();
+  });
+
+  if ("IntersectionObserver" in window) {
+    const valuesVisibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        valuesCarouselVisible = entry.isIntersecting;
+        if (valuesCarouselVisible) startValuesAutoplay();
+        else stopValuesAutoplay();
+      },
+      { threshold: 0.35 }
+    );
+
+    valuesVisibilityObserver.observe(valuesCarousel);
+  }
+
+  window.addEventListener("resize", () => {
+    if (!valuesMobileQuery.matches) {
+      stopValuesAutoplay();
+      valuesCarousel.scrollTo({ left: 0, behavior: "auto" });
+      setActiveValue(0);
+      return;
+    }
+
+    scrollToValue(activeValueIndex, "auto");
+    startValuesAutoplay();
+  });
+
+  setActiveValue(0);
+  startValuesAutoplay();
+}
+
 const revealImages = document.querySelectorAll(".reveal-image");
 const collage = document.querySelector(".collage");
+const mobileCollageQuery = window.matchMedia("(max-width: 760px)");
 const collageNotePairs = [...document.querySelectorAll("[data-collage-note]")]
   .map((note) => ({
     note,
@@ -350,6 +638,9 @@ const updateRestorationParallax = () => {
   const sliderRect = restorationSlider.getBoundingClientRect();
   const scrollDistance = Math.max(restorationSlider.offsetHeight - viewportHeight, 1);
   const sliderProgress = clamp((headerOffset - sliderRect.top) / scrollDistance);
+  const entryProgress = smoothstep(
+    clamp((viewportHeight - sliderRect.top) / Math.max(viewportHeight - headerOffset, 1)),
+  );
   let slidePosition = 0;
 
   if (sliderProgress < 0.18) {
@@ -366,6 +657,7 @@ const updateRestorationParallax = () => {
 
   const currentIndex = Math.round(slidePosition);
 
+  restorationViewport.classList.toggle("is-final-step", currentIndex === restorationSteps.length - 1);
   restorationViewport.style.setProperty("--rail-y", `${slidePosition * 63}px`);
   restorationViewport.style.setProperty("--rail-x", `${slidePosition * 42}px`);
 
@@ -382,8 +674,14 @@ const updateRestorationParallax = () => {
 
     step.querySelectorAll("[data-depth]").forEach((layer) => {
       const depth = Number(layer.dataset.depth);
-      const layerSpeed = Math.max(0.4, 1 + depth * 3);
-      const layerOffset = slideOffset * viewportHeight * layerSpeed;
+      const transitionDistance = Math.min(Math.abs(slideOffset), 1);
+      const parallaxStrength = Math.sin(transitionDistance * Math.PI);
+      const layerSpeed = 1.05 + depth * 3 * parallaxStrength;
+      const entryOffset =
+        index === 0 && !reducedMotion
+          ? (1 - entryProgress) * viewportHeight * 0.18 * (1 + depth * 3)
+          : 0;
+      const layerOffset = slideOffset * viewportHeight * layerSpeed + entryOffset;
       layer.style.setProperty("--parallax-y", `${layerOffset}px`);
     });
   });
@@ -1027,14 +1325,17 @@ const updateCollageNotes = () => {
 
 const updateRevealImages = () => {
   const viewportHeight = window.innerHeight;
+  const isMobileCollage = mobileCollageQuery.matches;
+  const collageTop = collage?.getBoundingClientRect().top ?? 0;
 
   revealImages.forEach((image, index) => {
     const rect = image.getBoundingClientRect();
     const start = viewportHeight * 1.08;
-    const end = -rect.height * 0.2;
-    const progress = clamp((start - rect.top) / (start - end));
-    const startY = 240 + index * 34;
-    const endY = -130 - index * 24;
+    const end = isMobileCollage ? viewportHeight * 0.22 : -rect.height * 0.2;
+    const referenceTop = isMobileCollage ? collageTop + image.offsetTop : rect.top;
+    const progress = clamp((start - referenceTop) / (start - end));
+    const startY = isMobileCollage ? 180 + index * 18 : 240 + index * 34;
+    const endY = isMobileCollage ? 0 : -130 - index * 24;
     const currentY = startY + (endY - startY) * progress;
 
     image.style.setProperty("--scroll-y", `${currentY}px`);
@@ -1312,25 +1613,25 @@ if (professorCards.length) {
 
   professorList.forEach((card, cardIndex) => {
     card.addEventListener("pointerenter", () => {
-      if (!professorMobileQuery.matches) setProfessorTeamState(cardIndex, card);
+      if (!professorMobileQuery.matches) setProfessorTeamState(cardIndex + 1, card);
     });
     card.addEventListener("pointerleave", () => {
       if (!professorMobileQuery.matches && !card.matches(":focus")) setProfessorTeamState(0);
     });
     card.addEventListener("focus", () => {
-      if (!professorMobileQuery.matches) setProfessorTeamState(cardIndex, card);
+      if (!professorMobileQuery.matches) setProfessorTeamState(cardIndex + 1, card);
     });
     card.addEventListener("blur", () => {
       if (!professorMobileQuery.matches && !card.matches(":hover")) setProfessorTeamState(0);
     });
     card.addEventListener("click", () => {
-      if (!professorMobileQuery.matches && touchPointer) setProfessorTeamState(cardIndex, card);
+      if (!professorMobileQuery.matches && touchPointer) setProfessorTeamState(cardIndex + 1, card);
       toggleProfessorName(card);
     });
     card.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== " ") return;
       event.preventDefault();
-      if (!professorMobileQuery.matches) setProfessorTeamState(cardIndex, card);
+      if (!professorMobileQuery.matches) setProfessorTeamState(cardIndex + 1, card);
       toggleProfessorName(card);
     });
   });
