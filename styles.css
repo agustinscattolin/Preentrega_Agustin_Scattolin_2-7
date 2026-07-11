@@ -7095,12 +7095,12 @@ body.capsule-modal-open {
   }
 
   .results-compare {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 0.88 / 1;
     width: min(100%, 430px);
   }
 
   .results-image-before {
-    transform: none;
+    transform: scale(1.068) translateY(-1.4%);
   }
 
   .results-handle {
@@ -8593,6 +8593,14 @@ body.capsule-modal-open {
 
   .learning-path-intro {
     top: 43%;
+  }
+}
+
+@media (min-width: 1400px) and (max-width: 1599px) {
+  .detail-hero-video {
+    bottom: calc(7% - 34px);
+    right: calc(-10% - 50px);
+    width: clamp(1160px, 78vw, 1420px);
   }
 }
 
