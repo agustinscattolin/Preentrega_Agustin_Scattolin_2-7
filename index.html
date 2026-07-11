@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Raíz | Restauración de muebles y academia online</title>
+    <link rel="icon" type="image/png" href="assets/icons/favicon.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="assets/icons/faviconnaranja.png" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
       content="Raíz restaura muebles con historia y los transforma en piezas contemporáneas. Servicio integral, academia online y futuras colecciones cápsula."
@@ -53,10 +55,10 @@
       </button>
 
       <nav class="site-nav" id="site-nav" aria-label="Navegación principal" data-nav>
-        <a href="#restauracion">Restauración</a>
+        <a href="#nosotros">Sobre Ra&iacute;z</a>
+        <a href="#restauracion">Restauraci&oacute;n</a>
         <a href="#academia">Academia</a>
-        <a href="#capsula">Cápsula</a>
-        <a href="#nosotros">Sobre Raíz</a>
+        <a href="#capsula">C&aacute;psula</a>
         <a href="#contacto">Contacto</a>
         <a href="biblioteca-ux.html">BIBLIOTECA UI</a>
       </nav>
@@ -180,7 +182,7 @@
 
         <a class="manifest-cta button button-accent reveal-text reveal-delay-2" href="#restauracion">Quiero restaurar mi mueble</a>
 
-        <div class="values-grid" data-values-carousel>
+        <div class="values-grid" data-values-carousel data-home-popup-trigger>
           <article class="reveal-text">
             <span class="value-dot" aria-hidden="true">
               <img loading="lazy" decoding="async" src="assets/images/iconoshome1.png" alt="" />
@@ -217,6 +219,29 @@
           <button type="button" aria-label="Mostrar Sustentabilidad" aria-current="false"></button>
         </div>
       </section>
+
+      <div class="home-popup" data-home-popup aria-hidden="true">
+        <div class="home-popup-dialog" role="dialog" aria-modal="true" aria-label="Novedades de RAIZ Academia">
+          <img class="home-popup-art" src="assets/images/Add/popup.png" alt="RAIZ Academia. Tu proximo proyecto empieza aca. Deja tu email y recibi novedades de cursos, cupos y proximos talleres." />
+          <div class="home-popup-mobile-content">
+            <p class="home-popup-kicker"><strong>RAÍZ</strong><span>/ Academia</span></p>
+            <h2>Tu próximo proyecto empieza acá</h2>
+            <p>
+              Dejá tu email y recibí novedades de cursos, cupos y próximos talleres.
+            </p>
+            <img src="assets/images/Add/txtadd.png" alt="" aria-hidden="true" />
+          </div>
+          <form class="home-popup-form" data-home-popup-form aria-label="Recibir novedades de RAIZ Academia">
+            <label class="sr-only" for="home-popup-email">Email</label>
+            <input id="home-popup-email" type="email" name="email" placeholder="Email" autocomplete="email" />
+            <button type="submit" aria-label="Enviar email"></button>
+          </form>
+          <button class="home-popup-close" type="button" aria-label="Cerrar popup" data-home-popup-close></button>
+          <button class="home-popup-later" type="button" data-home-popup-later>
+            MÁS TARDE <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
 
       <section class="restoration-story" id="restauracion" aria-labelledby="service-title">
         <header class="restoration-heading section-pad">
@@ -680,7 +705,7 @@
         <div class="contact-panel">
           <h2 class="reveal-text" id="contact-title">¿Listo para darle una nueva vida a tu mueble?</h2>
           <p class="reveal-text reveal-delay-1">
-            Contanos tu idea, compartí fotos de tu mueble o consultanos sobre nuestros cursos. Estamos para ayudarte.
+            Contanos tu idea, compartí fotos de tu mueble o consultanos sobre nuestros cursos.<span class="contact-help-text"> Estamos para ayudarte.</span>
           </p>
 
           <form class="contact-form reveal-text reveal-delay-2" action="mailto:hola@raizrestaura.com" method="post" enctype="text/plain">
@@ -710,17 +735,19 @@
           <a class="footer-logo reveal-text" href="#inicio" aria-label="Volver al inicio">RAÍZ</a>
           <p class="reveal-text reveal-delay-1">Restauración de muebles, formación online y futuras piezas cápsula con mirada contemporánea.</p>
           <a class="footer-back-top reveal-text reveal-delay-2" href="#inicio">
-            Volver al inicio <span aria-hidden="true">↑</span>
+            Volver al inicio <span aria-hidden="true">&#8599;</span>
           </a>
         </div>
 
         <nav class="footer-nav reveal-text reveal-delay-1" aria-label="Navegación secundaria">
-          <h2>Secciones</h2>
+          <h2>Explorar</h2>
           <a href="#inicio">Home</a>
           <a href="#restauracion">Restauración</a>
           <a href="#academia">Academia</a>
           <a href="#capsula">Cápsula</a>
           <a href="#contacto">Contacto</a>
+          <a href="biblioteca-ux.html">Biblioteca UI</a>
+          <a href="paginadetalle.html">Curso restauración</a>
         </nav>
 
         <div class="footer-contact reveal-text reveal-delay-2">

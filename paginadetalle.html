@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Restauración de sillas | Raíz</title>
+    <link rel="icon" type="image/png" href="assets/icons/favicon.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="assets/icons/faviconnaranja.png" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
       content="Curso de restauración de sillas de Raíz. Formación práctica para recuperar estructura, materialidad e identidad."
@@ -21,7 +23,7 @@
       href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=detalle-hero-cta-3" />
+    <link rel="stylesheet" href="styles.css?v=detalle-mobile-comparison-button-3" />
   </head>
   <body class="detail-page">
     <header class="site-header detail-header" data-header>
@@ -41,11 +43,22 @@
         <span class="search-toggle-icon" aria-hidden="true"></span>
       </button>
 
-      <nav class="site-nav" aria-label="Navegación principal" data-nav>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="site-nav"
+        data-menu-toggle
+      >
+        <span class="menu-toggle-icon" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navegación principal" data-nav>
+        <a href="index.html#nosotros">Sobre Raíz</a>
         <a href="index.html#restauracion">Restauración</a>
         <a href="index.html#academia">Academia</a>
         <a href="index.html#capsula">Cápsula</a>
-        <a href="index.html#nosotros">Sobre Raíz</a>
         <a href="index.html#contacto">Contacto</a>
         <a href="biblioteca-ux.html">BIBLIOTECA UI</a>
       </nav>
@@ -93,6 +106,10 @@
             <source src="assets/images/paginadetalle/videonuevohero3.webm" type="video/webm" />
           </video>
         </div>
+
+        <a class="hero-scroll detail-hero-scroll" href="#informacion-curso" aria-label="Ir a la información del curso">
+          <span>Scroll</span>
+        </a>
       </section>
 
       <section class="course-facts" id="informacion-curso" aria-labelledby="course-facts-title">
@@ -161,6 +178,14 @@
               <strong class="learning-card-number">04.</strong>
             </article>
           </div>
+
+          <div class="learning-pagination" aria-label="Elegir etapa del aprendizaje" data-learning-pagination>
+            <button class="learning-dot is-active" type="button" aria-label="Ver etapa 1 de 4" aria-current="true"></button>
+            <button class="learning-dot" type="button" aria-label="Ver etapa 2 de 4" aria-current="false"></button>
+            <button class="learning-dot" type="button" aria-label="Ver etapa 3 de 4" aria-current="false"></button>
+            <button class="learning-dot" type="button" aria-label="Ver etapa 4 de 4" aria-current="false"></button>
+          </div>
+          <p class="sr-only" aria-live="polite" data-learning-status>Etapa 1 de 4</p>
         </div>
       </section>
 
@@ -243,7 +268,7 @@
             Del diagnóstico al renacimiento
           </h2>
           <p class="course-program-intro reveal-text reveal-delay-2">
-            Un recorrido práctico para aprender a leer, reparar y transformar una silla con una mirada contemporánea.
+            Un recorrido práctico para aprender a leer, reparar y transformar una silla.
           </p>
         </header>
 
@@ -507,7 +532,7 @@
 
         <div class="professors-grid" aria-label="Equipo docente">
           <article
-            class="professor-card"
+            class="professor-card professor-reveal reveal-text"
             tabindex="0"
             role="button"
             aria-label="Mostrar nombre de la profesora"
@@ -547,7 +572,7 @@
           </article>
 
           <article
-            class="professor-card"
+            class="professor-card professor-reveal reveal-text reveal-delay-1"
             tabindex="0"
             role="button"
             aria-label="Mostrar nombre del profesor"
@@ -587,7 +612,7 @@
           </article>
 
           <article
-            class="professor-card"
+            class="professor-card professor-reveal reveal-text reveal-delay-2"
             tabindex="0"
             role="button"
             aria-label="Mostrar nombre de la profesora"
@@ -627,7 +652,7 @@
           </article>
 
           <article
-            class="professor-card"
+            class="professor-card professor-reveal reveal-text reveal-delay-3"
             tabindex="0"
             role="button"
             aria-label="Mostrar nombre del profesor"
@@ -666,6 +691,13 @@
             <span class="professor-name">Tomás Leiva</span>
           </article>
         </div>
+
+        <div class="professors-pagination" aria-label="Elegir profesor" data-professors-pagination>
+          <button class="professors-dot is-active" type="button" aria-label="Ver profesor 1 de 4" aria-current="true"></button>
+          <button class="professors-dot" type="button" aria-label="Ver profesor 2 de 4" aria-current="false"></button>
+          <button class="professors-dot" type="button" aria-label="Ver profesor 3 de 4" aria-current="false"></button>
+          <button class="professors-dot" type="button" aria-label="Ver profesor 4 de 4" aria-current="false"></button>
+        </div>
       </section>
 
       <section class="testimonials" id="voces" aria-labelledby="testimonials-title" data-testimonials>
@@ -700,7 +732,7 @@
           data-testimonials-carousel
         >
           <div class="testimonials-track" role="list" data-testimonials-track>
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text" role="listitem">
               <p>Llegué sin saber por dónde empezar y terminé entendiendo cada parte de la silla. Me gustó que no se trató solo de reparar, sino de tomar decisiones con criterio.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -709,7 +741,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text reveal-delay-1" role="listitem">
               <p>El curso me ayudó a perderle miedo a las herramientas. Aprendí a diagnosticar la estructura, reforzar uniones y darle una terminación mucho más prolija.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -718,7 +750,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text reveal-delay-2" role="listitem">
               <p>Traje una silla heredada que pensaba que no tenía arreglo. En el proceso aprendí a conservar su historia y devolverle uso sin que perdiera su carácter.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -727,7 +759,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text reveal-delay-3" role="listitem">
               <p>Me sorprendió lo práctico que fue. Cada clase tenía una etapa concreta y al final pude ver una increíble y fugaz transformación real hecha con mis propias manos.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -736,7 +768,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text" role="listitem">
               <p>Las explicaciones son claras y van directo a lo importante. Pude avanzar a mi ritmo y volver a cada técnica cuando la necesitaba en el taller.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -745,7 +777,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text reveal-delay-1" role="listitem">
               <p>Siempre quise recuperar muebles, pero no sabía cómo evaluar una pieza. Ahora puedo reconocer qué conservar, qué reparar y cómo planificar cada paso.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -754,7 +786,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text reveal-delay-2" role="listitem">
               <p>Lo disfruté muchísimo. La combinación entre técnica y diseño me dio libertad para animarme a una terminación más personal, sin perder el respeto por la pieza.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -763,7 +795,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text reveal-delay-3" role="listitem">
               <p>Aprendí por qué mis reparaciones anteriores no duraban. Entender las uniones y preparar bien la madera cambió por completo mi forma de trabajar.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -772,7 +804,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text" role="listitem">
               <p>La silla que elegí estaba floja y muy marcada. Hoy es la pieza que más miradas se lleva en casa y, sobre todo, quedó firme y lista para muchos años más.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -781,7 +813,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text reveal-delay-1" role="listitem">
               <p>Sentí que me acompañaban incluso a la distancia. Los ejemplos y los detalles de cada proceso hacen que sea muy fácil llevar la teoría a la práctica.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -790,7 +822,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text reveal-delay-2" role="listitem">
               <p>Fue mi primer proyecto de restauración y nunca me sentí perdida. El orden de las clases te da confianza para avanzar y entender cada decisión.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -799,7 +831,7 @@
               </footer>
             </article>
 
-            <article class="testimonial-card" role="listitem">
+            <article class="testimonial-card testimonial-reveal reveal-text reveal-delay-3" role="listitem">
               <p>El resultado superó lo que imaginaba. No solo recuperé una silla: me llevé un método que ya estoy usando para mirar otros muebles con nuevos ojos.</p>
               <div class="testimonial-rating" aria-label="5 de 5 estrellas">★★★★★</div>
               <footer>
@@ -999,17 +1031,19 @@
           <a class="footer-logo" href="index.html#inicio" aria-label="Volver al inicio">RAÍZ</a>
           <p>Restauración de muebles, formación online y futuras piezas cápsula con mirada contemporánea.</p>
           <a class="footer-back-top" href="#inicio">
-            Volver al inicio <span aria-hidden="true">↑</span>
+            Volver al inicio <span aria-hidden="true">&#8599;</span>
           </a>
         </div>
 
         <nav class="footer-nav" aria-label="Navegación secundaria">
-          <h2>Secciones</h2>
+          <h2>Explorar</h2>
           <a href="index.html#inicio">Home</a>
           <a href="index.html#restauracion">Restauración</a>
           <a href="index.html#academia">Academia</a>
           <a href="index.html#capsula">Cápsula</a>
           <a href="index.html#contacto">Contacto</a>
+          <a href="biblioteca-ux.html">Biblioteca UI</a>
+          <a href="paginadetalle.html">Curso restauración</a>
         </nav>
 
         <div class="footer-contact">

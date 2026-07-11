@@ -121,6 +121,18 @@ if (!reducedMotion && !touchPointer) {
   window.addEventListener("pointermove", handleWoodDust, { passive: true });
 }
 
+document.querySelectorAll('.footer-back-top, .brand[href="#inicio"]').forEach((button) => {
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: reducedMotion ? "auto" : "smooth",
+    });
+  });
+});
+
 const setHeaderState = () => {
   header.classList.toggle("is-scrolled", window.scrollY > 16);
 };
@@ -303,7 +315,97 @@ const courseCarousel = document.querySelector("[data-course-carousel]");
 const coursePagination = document.querySelector("[data-course-pagination]");
 const valuesCarousel = document.querySelector("[data-values-carousel]");
 const valuesPagination = document.querySelector("[data-values-pagination]");
+const homePopupTrigger = document.querySelector("[data-home-popup-trigger]");
+const homePopup = document.querySelector("[data-home-popup]");
+const homePopupClose = document.querySelector("[data-home-popup-close]");
+const homePopupLater = document.querySelector("[data-home-popup-later]");
+const homePopupForm = document.querySelector("[data-home-popup-form]");
 const materialCarousel = document.querySelector(".material-library-board");
+
+if (homePopup && homePopupTrigger && homePopupClose && homePopupLater && homePopupForm) {
+  let homePopupShown = false;
+  let homePopupTimer = null;
+
+  const clearHomePopupTimer = () => {
+    window.clearTimeout(homePopupTimer);
+    homePopupTimer = null;
+  };
+
+  const closeHomePopup = () => {
+    clearHomePopupTimer();
+    homePopup.classList.remove("is-open");
+    homePopup.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("home-popup-open");
+  };
+
+  const openHomePopup = () => {
+    if (homePopupShown) return;
+
+    homePopupShown = true;
+    homePopup.classList.add("is-open");
+    homePopup.setAttribute("aria-hidden", "false");
+    document.body.classList.add("home-popup-open");
+  };
+
+  const scheduleHomePopup = () => {
+    if (homePopupShown || homePopupTimer) return;
+
+    homePopupTimer = window.setTimeout(() => {
+      homePopupTimer = null;
+      openHomePopup();
+    }, 1000);
+  };
+
+  homePopupClose.addEventListener("click", closeHomePopup);
+  homePopupLater.addEventListener("click", closeHomePopup);
+  homePopupForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    closeHomePopup();
+  });
+
+  homePopup.addEventListener("click", (event) => {
+    if (event.target === homePopup) closeHomePopup();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && homePopup.classList.contains("is-open")) {
+      closeHomePopup();
+    }
+  });
+
+  if ("IntersectionObserver" in window) {
+    const homePopupObserver = new IntersectionObserver(
+      ([entry], observer) => {
+        if (homePopupShown) {
+          observer.disconnect();
+          return;
+        }
+
+        if (entry.isIntersecting) {
+          scheduleHomePopup();
+        } else {
+          clearHomePopupTimer();
+        }
+      },
+      { rootMargin: "-18% 0px -28%", threshold: 0.2 }
+    );
+
+    homePopupObserver.observe(homePopupTrigger);
+  } else {
+    const showHomePopupOnScroll = () => {
+      const rect = homePopupTrigger.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      if (rect.top < viewportHeight * 0.74 && rect.bottom > viewportHeight * 0.18) {
+        scheduleHomePopup();
+        window.removeEventListener("scroll", showHomePopupOnScroll);
+      }
+    };
+
+    window.addEventListener("scroll", showHomePopupOnScroll, { passive: true });
+    showHomePopupOnScroll();
+  }
+}
 
 if (courseCarousel && coursePagination) {
   const courseCards = [...courseCarousel.querySelectorAll(".course-card")];
@@ -613,6 +715,10 @@ const restorationViewport = restorationSlider?.querySelector(".restoration-viewp
 const restorationProgressItems = document.querySelectorAll("[data-restoration-progress] li");
 const learningPath = document.querySelector("[data-learning-path]");
 const learningPathCards = learningPath?.querySelectorAll(".learning-card") ?? [];
+const learningCardsTrack = learningPath?.querySelector(".learning-cards");
+const learningPagination = learningPath?.querySelector("[data-learning-pagination]");
+const learningDots = learningPagination ? [...learningPagination.querySelectorAll(".learning-dot")] : [];
+const learningStatus = learningPath?.querySelector("[data-learning-status]");
 const learningPathHorizontalQuery = window.matchMedia("(max-width: 760px)");
 
 if (collage && collageNotePairs.length) {
@@ -621,6 +727,60 @@ if (collage && collageNotePairs.length) {
 
 if (learningPath && learningPathCards.length && !reducedMotion && !learningPathHorizontalQuery.matches) {
   learningPath.classList.add("is-scroll-ready");
+}
+
+if (learningCardsTrack && learningPathCards.length && learningDots.length) {
+  let learningScrollFrame = null;
+
+  const setActiveLearningCard = (activeIndex) => {
+    learningDots.forEach((dot, index) => {
+      const isActive = index === activeIndex;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-current", String(isActive));
+    });
+
+    if (learningStatus) {
+      learningStatus.textContent = `Etapa ${activeIndex + 1} de ${learningPathCards.length}`;
+    }
+  };
+
+  const updateActiveLearningCard = () => {
+    const trackCenter = learningCardsTrack.scrollLeft + learningCardsTrack.clientWidth / 2;
+    const activeIndex = [...learningPathCards].reduce((bestIndex, card, index) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const bestCard = learningPathCards[bestIndex];
+      const bestCenter = bestCard.offsetLeft + bestCard.offsetWidth / 2;
+      return Math.abs(cardCenter - trackCenter) < Math.abs(bestCenter - trackCenter) ? index : bestIndex;
+    }, 0);
+
+    setActiveLearningCard(activeIndex);
+  };
+
+  learningDots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      const card = learningPathCards[index];
+      if (!card) return;
+
+      const targetLeft = card.offsetLeft - (learningCardsTrack.clientWidth - card.offsetWidth) / 2;
+      learningCardsTrack.scrollTo({
+        left: targetLeft,
+        behavior: reducedMotion ? "auto" : "smooth",
+      });
+      setActiveLearningCard(index);
+    });
+  });
+
+  learningCardsTrack.addEventListener(
+    "scroll",
+    () => {
+      window.cancelAnimationFrame(learningScrollFrame);
+      learningScrollFrame = window.requestAnimationFrame(updateActiveLearningCard);
+    },
+    { passive: true },
+  );
+
+  window.addEventListener("resize", updateActiveLearningCard);
+  updateActiveLearningCard();
 }
 
 const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
@@ -1456,6 +1616,8 @@ if (programSection) {
   const programPoints = [...programSection.querySelectorAll("[data-program-points] li")];
   const programTechnique = programSection.querySelector("[data-program-technique]");
   const programMobileQuery = window.matchMedia("(max-width: 760px)");
+  let activeProgramIndex = 0;
+  let programPointerStart = null;
   const programStages = {
     diagnostico: {
       video: "assets/images/paginadetalle/programa/videodiagnostico.mp4",
@@ -1517,6 +1679,8 @@ if (programSection) {
   const selectProgramStage = (stageKey, moveFocus = false) => {
     const stage = programStages[stageKey];
     if (!stage) return;
+    const nextActiveIndex = programTabs.findIndex((tab) => tab.dataset.programTab === stageKey);
+    if (nextActiveIndex >= 0) activeProgramIndex = nextActiveIndex;
 
     programTabs.forEach((tab, index) => {
       const isActive = tab.dataset.programTab === stageKey;
@@ -1555,6 +1719,12 @@ if (programSection) {
     programPanel.classList.add("is-entering");
   };
 
+  const selectProgramByOffset = (offset) => {
+    const nextIndex = Math.min(Math.max(activeProgramIndex + offset, 0), programTabs.length - 1);
+    if (nextIndex === activeProgramIndex) return;
+    selectProgramStage(programTabs[nextIndex].dataset.programTab);
+  };
+
   programTabs.forEach((tab, index) => {
     tab.id = `program-tab-${index + 1}`;
     tab.addEventListener("click", () => selectProgramStage(tab.dataset.programTab));
@@ -1573,6 +1743,35 @@ if (programSection) {
   });
 
   programPanel.setAttribute("aria-labelledby", programTabs[0].id);
+
+  programPanel.addEventListener("pointerdown", (event) => {
+    if (!programMobileQuery.matches) return;
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+
+    programPointerStart = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+    };
+  });
+
+  window.addEventListener("pointerup", (event) => {
+    if (!programPointerStart || event.pointerId !== programPointerStart.id) return;
+
+    const distanceX = event.clientX - programPointerStart.x;
+    const distanceY = event.clientY - programPointerStart.y;
+    programPointerStart = null;
+
+    if (!programMobileQuery.matches) return;
+    if (Math.abs(distanceX) < 45 || Math.abs(distanceX) <= Math.abs(distanceY) * 1.2) return;
+
+    selectProgramByOffset(distanceX < 0 ? 1 : -1);
+  });
+
+  window.addEventListener("pointercancel", (event) => {
+    if (programPointerStart?.id === event.pointerId) programPointerStart = null;
+  });
+
   if (programMobileQuery.matches) {
     window.requestAnimationFrame(() => {
       programTabs[0].scrollIntoView({
@@ -1588,7 +1787,12 @@ const professorCards = document.querySelectorAll("[data-professor]");
 
 if (professorCards.length) {
   const professorList = [...professorCards];
+  const professorsSection = professorList[0].closest(".professors");
+  const professorsGrid = professorsSection?.querySelector(".professors-grid");
+  const professorsPagination = professorsSection?.querySelector("[data-professors-pagination]");
+  const professorDots = professorsPagination ? [...professorsPagination.querySelectorAll(".professors-dot")] : [];
   const professorMobileQuery = window.matchMedia("(max-width: 760px)");
+  let professorScrollFrame = null;
 
   const setProfessorTeamState = (frameIndex, targetCard = null) => {
     professorList.forEach((card) => {
@@ -1598,6 +1802,14 @@ if (professorCards.length) {
       frames.forEach((frame, index) => frame.classList.toggle("is-active", index === safeIndex));
       card.classList.toggle("is-target", card === targetCard);
       card.dataset.frame = String(safeIndex);
+    });
+  };
+
+  const setProfessorNameVisibility = (targetCard = null) => {
+    professorList.forEach((card) => {
+      const isVisible = card === targetCard;
+      card.classList.toggle("is-name-visible", isVisible);
+      card.setAttribute("aria-pressed", String(isVisible));
     });
   };
 
@@ -1611,32 +1823,122 @@ if (professorCards.length) {
     });
   };
 
+  const syncProfessorMobileNames = () => {
+    if (!professorMobileQuery.matches) return;
+
+    professorList.forEach((card) => {
+      card.classList.add("is-name-visible");
+      card.setAttribute("aria-pressed", "true");
+    });
+  };
+
   professorList.forEach((card, cardIndex) => {
-    card.addEventListener("pointerenter", () => {
-      if (!professorMobileQuery.matches) setProfessorTeamState(cardIndex + 1, card);
+    card.addEventListener("pointerenter", (event) => {
+      if (!professorMobileQuery.matches && event.pointerType !== "touch") {
+        setProfessorTeamState(cardIndex + 1, card);
+        setProfessorNameVisibility(card);
+      }
     });
     card.addEventListener("pointerleave", () => {
-      if (!professorMobileQuery.matches && !card.matches(":focus")) setProfessorTeamState(0);
+      if (!professorMobileQuery.matches && !card.matches(":focus")) {
+        setProfessorTeamState(0);
+        setProfessorNameVisibility();
+      }
     });
     card.addEventListener("focus", () => {
-      if (!professorMobileQuery.matches) setProfessorTeamState(cardIndex + 1, card);
+      if (professorMobileQuery.matches) return;
+
+      window.requestAnimationFrame(() => {
+        if (!card.matches(":focus-visible")) return;
+
+        setProfessorTeamState(cardIndex + 1, card);
+        setProfessorNameVisibility(card);
+      });
     });
     card.addEventListener("blur", () => {
-      if (!professorMobileQuery.matches && !card.matches(":hover")) setProfessorTeamState(0);
+      if (!professorMobileQuery.matches && !card.matches(":hover")) {
+        setProfessorTeamState(0);
+        setProfessorNameVisibility();
+      }
     });
     card.addEventListener("click", () => {
-      if (!professorMobileQuery.matches && touchPointer) setProfessorTeamState(cardIndex + 1, card);
+      if (professorMobileQuery.matches) {
+        syncProfessorMobileNames();
+        return;
+      }
+
+      if (!professorMobileQuery.matches && !touchPointer) return;
+
+      if (!professorMobileQuery.matches) setProfessorTeamState(cardIndex + 1, card);
       toggleProfessorName(card);
     });
     card.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== " ") return;
       event.preventDefault();
-      if (!professorMobileQuery.matches) setProfessorTeamState(cardIndex + 1, card);
-      toggleProfessorName(card);
+
+      if (!professorMobileQuery.matches) {
+        setProfessorTeamState(cardIndex + 1, card);
+        setProfessorNameVisibility(card);
+        return;
+      }
+
+      syncProfessorMobileNames();
     });
   });
 
+  if (professorsGrid && professorDots.length) {
+    const setActiveProfessor = (activeIndex) => {
+      professorDots.forEach((dot, index) => {
+        const isActive = index === activeIndex;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-current", String(isActive));
+      });
+    };
+
+    const updateActiveProfessor = () => {
+      const gridCenter = professorsGrid.scrollLeft + professorsGrid.clientWidth / 2;
+      const activeIndex = professorList.reduce((bestIndex, card, index) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const bestCard = professorList[bestIndex];
+        const bestCenter = bestCard.offsetLeft + bestCard.offsetWidth / 2;
+        return Math.abs(cardCenter - gridCenter) < Math.abs(bestCenter - gridCenter) ? index : bestIndex;
+      }, 0);
+
+      setActiveProfessor(activeIndex);
+    };
+
+    professorDots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        const card = professorList[index];
+        if (!card) return;
+
+        const targetLeft = card.offsetLeft - (professorsGrid.clientWidth - card.offsetWidth) / 2;
+        professorsGrid.scrollTo({
+          left: targetLeft,
+          behavior: reducedMotion ? "auto" : "smooth",
+        });
+        setActiveProfessor(index);
+      });
+    });
+
+    professorsGrid.addEventListener(
+      "scroll",
+      () => {
+        window.cancelAnimationFrame(professorScrollFrame);
+        professorScrollFrame = window.requestAnimationFrame(updateActiveProfessor);
+      },
+      { passive: true },
+    );
+
+    window.addEventListener("resize", () => {
+      updateActiveProfessor();
+      syncProfessorMobileNames();
+    });
+    updateActiveProfessor();
+  }
+
   setProfessorTeamState(0);
+  syncProfessorMobileNames();
 }
 
 const testimonialsSection = document.querySelector("[data-testimonials]");
@@ -1675,7 +1977,7 @@ if (testimonialsSection) {
 
     autoPlayTimer = window.setInterval(() => {
       showTestimonialsPage(currentPage + 1, false);
-    }, 6000);
+    }, 3500);
   };
 
   const buildPagination = () => {
@@ -1771,8 +2073,6 @@ if (testimonialsSection) {
     startAutoPlay();
   });
 
-  testimonialsSection.addEventListener("mouseenter", stopAutoPlay);
-  testimonialsSection.addEventListener("mouseleave", startAutoPlay);
   testimonialsSection.addEventListener("focusin", stopAutoPlay);
   testimonialsSection.addEventListener("focusout", (event) => {
     if (!testimonialsSection.contains(event.relatedTarget)) startAutoPlay();

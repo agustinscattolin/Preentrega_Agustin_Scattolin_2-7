@@ -25,6 +25,23 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-color: #b96842 #26231f;
+  scrollbar-width: auto;
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #26231f;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b96842;
+  border: 2px solid #26231f;
+  border-radius: 999px;
 }
 
 body {
@@ -258,6 +275,12 @@ button {
   border-radius: 50%;
   background: var(--orange);
   cursor: pointer;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.search-toggle:hover,
+.search-toggle:focus-visible {
+  background: var(--ink);
 }
 
 .search-toggle-icon {
@@ -366,7 +389,7 @@ button {
   height: 48px;
   padding: 0 18px;
   border: 1px solid rgba(7, 7, 7, 0.2);
-  border-radius: 4px;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   color: var(--ink);
   font: inherit;
@@ -382,7 +405,7 @@ button {
   min-width: 112px;
   padding: 0 20px;
   border: 0;
-  border-radius: 4px;
+  border-radius: 999px;
   background: var(--ink);
   color: var(--paper);
   font-size: 13px;
@@ -783,12 +806,12 @@ p {
 .collage::after {
   position: absolute;
   right: 0;
-  bottom: -1px;
+  bottom: -3px;
   left: 0;
   z-index: 20;
-  height: 52px;
+  height: 56px;
   content: "";
-  background: var(--paper) url("assets/images/FONDO CLARO.png") center bottom / cover;
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
   clip-path: polygon(
     0 38%,
     8% 30%,
@@ -1208,6 +1231,331 @@ p {
 
 .values-pagination {
   display: none;
+}
+
+body.home-popup-open {
+  overflow: hidden;
+}
+
+.home-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 4vw, 52px);
+  background: rgba(7, 7, 7, 0.54);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 240ms ease,
+    visibility 0s linear 240ms;
+}
+
+.home-popup.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.home-popup-dialog {
+  position: relative;
+  width: min(76vw, 760px, calc(78vh * 1448 / 1168));
+  aspect-ratio: 1448 / 1168;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--paper);
+  box-shadow: 0 32px 96px rgba(7, 7, 7, 0.34);
+  transform: translateY(22px) scale(0.97);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-popup.is-open .home-popup-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.home-popup-dialog img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.home-popup-mobile-content {
+  display: none;
+}
+
+.home-popup-form {
+  position: absolute;
+  top: 65.2%;
+  left: 8.6%;
+  display: grid;
+  grid-template-columns: 1fr 11.2%;
+  align-items: center;
+  width: 58.2%;
+  height: 8.7%;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.home-popup-form input {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  padding: 0 5.8%;
+  border: 0;
+  border-radius: 999px 0 0 999px;
+  color: var(--ink);
+  background: transparent;
+  font: 500 clamp(13px, 2.2vw, 18px) / 1 "Raleway", Arial, Helvetica, sans-serif;
+}
+
+.home-popup-form input::placeholder {
+  color: #5b544d;
+  opacity: 1;
+}
+
+.home-popup-form input:focus {
+  outline: none;
+}
+
+.home-popup-form:focus-within {
+  box-shadow: 0 0 0 2px rgba(7, 7, 7, 0.2);
+}
+
+.home-popup-form button {
+  position: relative;
+  width: 84%;
+  aspect-ratio: 1;
+  justify-self: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--orange);
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+
+.home-popup-form button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 31%;
+  width: 36%;
+  height: 2px;
+  background: #fff;
+  transform: translateY(-50%);
+}
+
+.home-popup-form button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 31%;
+  width: 18%;
+  aspect-ratio: 1;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.home-popup-form button:hover,
+.home-popup-form button:focus-visible {
+  background: var(--ink);
+}
+
+.home-popup-form button:focus-visible,
+.home-popup-later:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.home-popup-close {
+  position: absolute;
+  top: 3.7%;
+  right: 3.1%;
+  width: clamp(42px, 5.4vw, 68px);
+  height: clamp(42px, 5.4vw, 68px);
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.home-popup-close:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -6px;
+}
+
+.home-popup-later {
+  position: absolute;
+  top: 87%;
+  left: 8.6%;
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  width: auto;
+  height: auto;
+  padding: 0 0 3px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--ink);
+  background: transparent;
+  font: 800 clamp(13px, 1.9vw, 17px) / 1.15 "Raleway", Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 180ms ease;
+}
+
+.home-popup-later span {
+  transition: transform 180ms ease;
+}
+
+.home-popup-later:hover,
+.home-popup-later:focus-visible {
+  border-bottom-color: var(--ink);
+}
+
+.home-popup-later:hover span,
+.home-popup-later:focus-visible span {
+  transform: translateX(5px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-popup,
+  .home-popup-dialog {
+    transition: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .home-popup {
+    align-items: center;
+    padding: 18px;
+  }
+
+  .home-popup-dialog {
+    display: grid;
+    width: min(92vw, 390px);
+    aspect-ratio: auto;
+    min-height: 0;
+    padding: 30px 24px 26px;
+    overflow: hidden;
+    background:
+      linear-gradient(120deg, rgba(185, 104, 66, 0.08), transparent 38%),
+      var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+    box-shadow: 0 24px 76px rgba(7, 7, 7, 0.36);
+  }
+
+  .home-popup-art {
+    display: none;
+  }
+
+  .home-popup-mobile-content {
+    display: grid;
+    gap: 18px;
+    padding-bottom: 142px;
+  }
+
+  .home-popup-kicker {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 0;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .home-popup-kicker strong {
+    font-family: "Syne", "Raleway", Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0;
+  }
+
+  .home-popup-kicker span {
+    color: var(--orange);
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .home-popup-mobile-content h2 {
+    max-width: 292px;
+    margin: 18px 0 0;
+    color: var(--ink);
+    font-size: clamp(31px, 8.8vw, 38px);
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 0.98;
+  }
+
+  .home-popup-mobile-content p:not(.home-popup-kicker) {
+    max-width: 295px;
+    margin: 0;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.22;
+  }
+
+  .home-popup-mobile-content img {
+    display: none;
+  }
+
+  .home-popup-form {
+    top: auto;
+    right: 24px;
+    bottom: 88px;
+    left: 24px;
+    grid-template-columns: 1fr 38px;
+    width: auto;
+    height: 42px;
+    z-index: 2;
+    box-shadow: 0 8px 20px rgba(7, 7, 7, 0.08);
+  }
+
+  .home-popup-form input {
+    padding: 0 16px;
+    font-size: 16px;
+  }
+
+  .home-popup-close {
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .home-popup-close::before,
+  .home-popup-close::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 25px;
+    height: 2.5px;
+    background: var(--ink);
+    content: "";
+  }
+
+  .home-popup-close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .home-popup-close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  .home-popup-later {
+    top: auto;
+    bottom: 27px;
+    left: 24px;
+    font-size: 15px;
+  }
 }
 
 .service {
@@ -1859,12 +2207,18 @@ p {
 }
 
 .learning-results-flow {
+  position: relative;
+  z-index: 1;
   background: var(--ink) url("assets/images/aprendeconraiz/fondocursos.png") center / cover;
+}
+
+.learning-results-flow::after {
+  display: none;
 }
 
 .academy {
   position: relative;
-  scroll-margin-top: var(--header-height);
+  scroll-margin-top: max(0px, calc(var(--header-height) - 50px));
   display: grid;
   gap: clamp(44px, 5vw, 64px);
   padding-top: clamp(88px, 7vw, 106px);
@@ -2023,18 +2377,7 @@ p {
 }
 
 .results::after {
-  position: absolute;
-  right: -1px;
-  bottom: -1px;
-  left: -1px;
-  z-index: 10;
-  height: 44px;
-  content: "";
-  background:
-    linear-gradient(rgba(226, 220, 211, 0.82), rgba(226, 220, 211, 0.82)),
-    url("assets/images/Materialoteca/texturacuadriculada.jpg") center bottom / cover,
-    url("assets/images/FONDO CLARO.png") center bottom / cover;
-  clip-path: polygon(0 42%, 9% 28%, 18% 55%, 29% 48%, 40% 64%, 51% 38%, 62% 55%, 73% 43%, 84% 62%, 93% 35%, 100% 48%, 100% 100%, 0 100%);
+  display: none;
 }
 
 .results-grain {
@@ -2323,20 +2666,20 @@ p {
 
 .material-library {
   position: relative;
+  --material-grid-size: 700px auto;
   min-height: clamp(780px, 70vw, 920px);
   overflow: hidden;
-  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+  background:
+    linear-gradient(rgba(226, 220, 211, 0.84), rgba(226, 220, 211, 0.84)),
+    url("assets/images/Materialoteca/texturacuadriculada.jpg"),
+    var(--paper) url("assets/images/FONDO CLARO.png");
+  background-position: center top, center top, center top;
+  background-size: auto, var(--material-grid-size), cover;
   color: var(--ink);
 }
 
 .material-library::before {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  content: "";
-  background: url("assets/images/Materialoteca/texturacuadriculada.jpg") center / cover;
-  opacity: 0.16;
-  pointer-events: none;
+  display: none;
 }
 
 .material-library::after {
@@ -2910,8 +3253,8 @@ p {
     bottom: auto;
     left: auto;
     display: flex;
-    flex: 0 0 calc(100vw - 36px);
-    width: calc(100vw - 36px);
+    flex: 0 0 calc((100vw - 36px) * 0.8);
+    width: calc((100vw - 36px) * 0.8);
     min-height: 420px;
     align-items: center;
     justify-content: center;
@@ -2986,18 +3329,19 @@ p {
   z-index: 6;
   height: 74px;
   overflow: hidden;
-  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+  background:
+    linear-gradient(rgba(226, 220, 211, 0.84), rgba(226, 220, 211, 0.84)),
+    url("assets/images/Materialoteca/texturacuadriculada.jpg"),
+    var(--paper) url("assets/images/FONDO CLARO.png");
+  background-position: center bottom, center bottom, center bottom;
+  background-size: auto, var(--material-grid-size, 700px auto), cover;
   pointer-events: none;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 74' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 0H1440V45C1380 52 1340 29 1270 38C1190 49 1120 30 1040 42C960 56 900 34 820 41C730 49 650 55 570 42C490 28 410 50 330 40C250 29 170 49 90 38C50 32 25 49 0 51Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 74' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 0H1440V45C1380 52 1340 29 1270 38C1190 49 1120 30 1040 42C960 56 900 34 820 41C730 49 650 55 570 42C490 28 410 50 330 40C250 29 170 49 90 38C50 32 25 49 0 51Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }
 
 .photo-start-transition::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  background: url("assets/images/Materialoteca/texturacuadriculada.jpg") center / cover;
-  opacity: 0.16;
+  display: none;
 }
 
 .photo-start-copy {
@@ -3135,7 +3479,7 @@ p {
   }
 
   .photo-start-cards {
-    top: 340px;
+    top: 350px;
     right: 0;
     bottom: 0;
     left: 0;
@@ -3878,6 +4222,11 @@ body.capsule-modal-open {
   pointer-events: none;
 }
 
+.detail-hero-scroll {
+  right: clamp(18px, 3vw, 48px);
+  bottom: clamp(34px, 5vw, 74px);
+}
+
 .course-facts {
   padding: 78px clamp(28px, 5.4vw, 78px) 69px;
   background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
@@ -4080,7 +4429,7 @@ body.capsule-modal-open {
   font-family: "Raleway", Arial, Helvetica, sans-serif;
   font-size: clamp(34px, 3.05vw, 56px);
   font-weight: 800;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   line-height: 0.94;
 }
 
@@ -4109,6 +4458,10 @@ body.capsule-modal-open {
   margin-top: 9px;
   background: currentColor;
   content: "";
+}
+
+.learning-pagination {
+  display: none;
 }
 
 .learning-card-4 h3,
@@ -4331,7 +4684,8 @@ body.capsule-modal-open {
   width: min(440px, 90%);
   min-height: 56px;
   margin: 46px auto 0;
-  border-radius: 4px;
+  padding: 0 34px;
+  border-radius: 999px;
   background: #b96842;
   color: #fffaf4;
   font-size: clamp(17px, 1.4vw, 23px);
@@ -5091,6 +5445,31 @@ body.capsule-modal-open {
   margin: clamp(48px, 4.5vw, 70px) auto 0;
 }
 
+.professors-pagination {
+  display: none;
+}
+
+.professors-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  transition: background-color 220ms ease, transform 220ms ease;
+}
+
+.professors-dot.is-active {
+  background: var(--ink);
+  transform: scale(1.12);
+}
+
+.professors-dot:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
 .professor-card {
   position: relative;
   aspect-ratio: 0.765;
@@ -5098,6 +5477,11 @@ body.capsule-modal-open {
   background: rgba(7, 7, 7, 0.16);
   cursor: crosshair;
   isolation: isolate;
+}
+
+.reveal-ready .professor-card.professor-reveal {
+  --reveal-distance: 42px;
+  --reveal-duration: 720ms;
 }
 
 .professor-card::after {
@@ -5143,8 +5527,8 @@ body.capsule-modal-open {
   left: 14px;
   z-index: 4;
   padding: 10px 14px 9px;
-  background: rgba(7, 7, 7, 0.68);
-  color: #fffaf4;
+  background: rgba(255, 250, 244, 0.9);
+  color: var(--ink);
   font-size: clamp(14px, 1.05vw, 16px);
   font-weight: 600;
   line-height: 1.1;
@@ -5160,7 +5544,21 @@ body.capsule-modal-open {
   translate: 0 0;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .professor-card:hover .professor-name,
+  .professor-card:focus-visible .professor-name {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .reveal-ready .professor-card.professor-reveal {
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
+  }
+
   .professor-frame {
     transition: none;
   }
@@ -5262,6 +5660,11 @@ body.capsule-modal-open {
   padding: 28px 24px 0;
   isolation: isolate;
   user-select: none;
+}
+
+.reveal-ready .testimonial-card.testimonial-reveal {
+  --reveal-distance: 34px;
+  --reveal-duration: 680ms;
 }
 
 .testimonial-card::before {
@@ -5453,6 +5856,12 @@ body.capsule-modal-open {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal-ready .testimonial-card.testimonial-reveal {
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
+  }
+
   .testimonials-track,
   .testimonials-dot {
     transition: none;
@@ -5880,12 +6289,12 @@ body.capsule-modal-open {
 .footer-back-top {
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 18px;
+  justify-content: center;
+  gap: 8px;
   width: max-content;
   min-height: 38px;
   margin-top: 22px;
-  padding: 8px 12px;
+  padding: 9px 12px;
   border: 1px solid var(--orange);
   border-radius: 999px;
   color: #fffaf4;
@@ -5897,9 +6306,13 @@ body.capsule-modal-open {
 }
 
 .footer-back-top span {
+  display: inline-grid;
+  width: 14px;
+  height: 14px;
+  place-items: center;
   color: var(--orange);
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 1;
   transition: color 180ms ease, transform 180ms ease;
 }
@@ -5914,7 +6327,7 @@ body.capsule-modal-open {
 .footer-back-top:hover span,
 .footer-back-top:focus-visible span {
   color: #fff;
-  transform: translateY(-2px);
+  transform: translate(1px, -1px);
 }
 
 .footer-back-top:focus-visible {
@@ -6386,8 +6799,9 @@ body.capsule-modal-open {
     width: 100%;
     min-width: 0;
     min-height: 38px;
-    margin-top: -12px;
+    margin-top: 4px;
     justify-self: center;
+    translate: 0 -20px;
   }
 
   .hero-feature {
@@ -6676,6 +7090,10 @@ body.capsule-modal-open {
     margin-bottom: 42px;
   }
 
+  .contact-help-text {
+    display: none;
+  }
+
   .results-compare {
     aspect-ratio: 1 / 1;
     width: min(100%, 430px);
@@ -6834,10 +7252,16 @@ body.capsule-modal-open {
   }
 
   .footer-main {
-    grid-template-columns: 1fr;
-    gap: 34px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 22px;
+    row-gap: 34px;
     padding-bottom: 34px;
     text-align: center;
+  }
+
+  .footer-brand,
+  .footer-map {
+    grid-column: 1 / -1;
   }
 
   .footer-brand p {
@@ -6845,12 +7269,27 @@ body.capsule-modal-open {
     margin-left: auto;
   }
 
-  .footer-nav,
-  .footer-contact,
-  .footer-social,
+  .footer-brand,
   .footer-map {
     justify-items: center;
     text-align: center;
+  }
+
+  .footer-nav,
+  .footer-contact,
+  .footer-social {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .footer-contact a {
+    width: auto;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .footer-contact {
+    align-content: start;
   }
 
   .footer-map {
@@ -7528,7 +7967,7 @@ body.capsule-modal-open {
   }
 
   .course-program {
-    padding: 82px 0 92px;
+    padding: 82px 0 63px;
   }
 
   .course-program-header {
@@ -7553,7 +7992,7 @@ body.capsule-modal-open {
   .program-tabs-scroll {
     width: 100%;
     max-width: none;
-    margin-top: 52px;
+    margin-top: 36px;
     padding: 0 18px 14px;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
@@ -7587,13 +8026,14 @@ body.capsule-modal-open {
   .program-stage-layout {
     display: block;
     max-width: none;
-    margin: 38px 18px 0;
+    margin: 10px 18px 0;
   }
 
   .program-stage-card {
     grid-template-columns: 1fr;
     height: clamp(570px, 150vw, 600px);
     padding: 12px;
+    touch-action: pan-y;
   }
 
   .program-stage-video {
@@ -7712,7 +8152,7 @@ body.capsule-modal-open {
   .detail-hero {
     grid-template-columns: 1fr;
     min-height: auto;
-    padding: 58px 18px 0;
+    padding: 28px 18px 0;
   }
 
   .detail-hero-copy {
@@ -7771,6 +8211,13 @@ body.capsule-modal-open {
     transform: translateX(-50%);
   }
 
+  .detail-hero-scroll {
+    display: none;
+    right: 18px;
+    bottom: 28px;
+    z-index: 6;
+  }
+
   .course-facts {
     padding: 56px 18px 64px;
   }
@@ -7810,7 +8257,7 @@ body.capsule-modal-open {
     top: auto;
     height: auto;
     min-height: 0;
-    padding: 110px 0 76px;
+    padding: 70px 0 47px;
     overflow: hidden;
   }
 
@@ -7819,7 +8266,7 @@ body.capsule-modal-open {
     top: auto;
     left: auto;
     width: calc(100% - 28px);
-    margin: 0 auto 62px;
+    margin: 0 auto 6px;
     transform: none;
   }
 
@@ -7830,21 +8277,22 @@ body.capsule-modal-open {
   }
 
   .learning-path-script {
-    width: min(92vw, 470px);
+    width: min(74vw, 376px);
     margin-top: 4px;
   }
 
   .learning-cards {
+    --learning-card-mobile-width: min(80vw, 320px);
     position: relative;
     inset: auto;
     display: flex;
     gap: 12px;
     width: 100%;
-    padding: 18px 18px 30px;
+    padding: 0 calc((100vw - var(--learning-card-mobile-width)) / 2) 30px;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
     pointer-events: auto;
-    scroll-padding-inline: 18px;
+    scroll-padding-inline: calc((100vw - var(--learning-card-mobile-width)) / 2);
     scroll-snap-type: inline mandatory;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
@@ -7852,6 +8300,38 @@ body.capsule-modal-open {
 
   .learning-cards::-webkit-scrollbar {
     display: none;
+  }
+
+  .learning-pagination {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    justify-content: center;
+    min-height: 16px;
+    margin-top: 4px;
+  }
+
+  .learning-dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    transition: background-color 220ms ease, transform 220ms ease;
+  }
+
+  .learning-dot.is-active {
+    background: var(--orange);
+    transform: scale(1.12);
+  }
+
+  .learning-dot:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
   }
 
   .learning-card {
@@ -7862,14 +8342,14 @@ body.capsule-modal-open {
     position: relative;
     top: auto;
     left: auto;
-    flex: 0 0 calc(100vw - 36px);
-    width: calc(100vw - 36px);
+    flex: 0 0 var(--learning-card-mobile-width);
+    width: var(--learning-card-mobile-width);
     height: auto;
     min-height: 0;
     max-height: none;
-    padding: 30px 26px 26px;
+    padding: 24px 21px 21px;
     opacity: 1;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     transform: none;
     will-change: auto;
   }
@@ -7949,8 +8429,12 @@ body.capsule-modal-open {
   }
 
   .detail-comparison-button {
-    width: min(260px, 100%);
-    margin-top: 28px;
+    width: 100%;
+    min-height: 38px;
+    margin-top: 22px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
   }
 
   .detail-comparison-slider {
@@ -8008,10 +8492,32 @@ body.capsule-modal-open {
     display: none;
   }
 
+  .professors-pagination {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    justify-content: center;
+    min-height: 16px;
+    margin-top: 4px;
+  }
+
   .professor-card {
     flex: 0 0 calc(100vw - 54px);
     scroll-snap-align: center;
-    cursor: pointer;
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: pan-x pan-y;
+  }
+
+  .professor-card::after,
+  .professor-card.is-target::after {
+    border-color: transparent;
+  }
+
+  .professor-card:focus-visible {
+    outline: 0;
   }
 
   .professor-card .professor-frame {
@@ -8030,6 +8536,9 @@ body.capsule-modal-open {
     left: 12px;
     padding: 10px 12px 9px;
     font-size: 15px;
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
   }
 }
 
@@ -8064,6 +8573,26 @@ body.capsule-modal-open {
   .home-page #photo-start-title,
   .home-page #capsule-title {
     font-size: 72px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .detail-hero-shape {
+    top: -20px;
+  }
+
+  .detail-hero-video {
+    right: calc(-12% - 90px);
+    width: clamp(1210px, 84.7vw, 1634px);
+  }
+
+  .course-facts {
+    padding-top: 42px;
+    padding-bottom: 34px;
+  }
+
+  .learning-path-intro {
+    top: 43%;
   }
 }
 
@@ -8109,6 +8638,7 @@ body.capsule-modal-open {
   }
 
   .detail-hero-video {
+    bottom: calc(7% - 20px);
     right: 0;
   }
 

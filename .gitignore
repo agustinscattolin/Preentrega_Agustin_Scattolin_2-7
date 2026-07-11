@@ -1,0 +1,7 @@
+# Browser profiles generated during local visual checks
+.chrome-*/
+
+# Screenshots generated during visual verification
+/*-check*.png
+/detail-responsive-*.png
+/detail-type-position-*.png
