@@ -8670,3 +8670,1095 @@ body.capsule-modal-open {
     max-width: 1580px;
   }
 }
+
+/* UI library */
+.ui-library-page {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center top / cover;
+}
+
+.ui-library-page main {
+  width: 100%;
+  max-width: 100vw;
+  overflow: clip;
+}
+
+.ui-library-page .site-header,
+.ui-library-hero,
+.ui-library-shell,
+.ui-library-content,
+.ui-library-section,
+.ui-library-hero-copy,
+.ui-library-hero-board {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ui-library-page .site-header {
+  width: 100vw;
+}
+
+.ui-library-page .site-nav a[aria-current="page"] {
+  color: var(--orange);
+}
+
+.ui-library-hero .eyebrow {
+  font-size: clamp(15px, 1.35vw, 20px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ui-library-hero {
+  position: relative;
+  display: grid;
+  min-height: clamp(470px, 43vw, 660px);
+  place-items: center;
+  padding-top: clamp(96px, 9vw, 138px);
+  padding-bottom: clamp(50px, 6vw, 82px);
+  overflow: hidden;
+}
+
+.ui-library-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.ui-library-hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ui-library-hero h1 {
+  max-width: 920px;
+  margin: 0 auto 24px;
+  font-size: clamp(48px, 5.8vw, 82px);
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+
+.ui-library-hero-copy > p:last-child {
+  max-width: 650px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: clamp(16px, 1.25vw, 20px);
+  line-height: 1.35;
+}
+
+.ui-library-hero-board {
+  position: relative;
+  z-index: 1;
+  min-height: min(55vw, 620px);
+}
+
+.ui-library-hero-board::before {
+  content: "";
+  position: absolute;
+  top: 13%;
+  right: 0;
+  width: 72%;
+  aspect-ratio: 0.88;
+  background:
+    linear-gradient(rgba(183, 100, 62, 0.82), rgba(183, 100, 62, 0.82)),
+    url("assets/images/betas2.png") center / cover;
+}
+
+.ui-library-hero-chair {
+  position: absolute;
+  right: 16%;
+  bottom: 2%;
+  z-index: 2;
+  width: min(62%, 390px);
+  filter: drop-shadow(22px 26px 34px rgba(7, 7, 7, 0.2));
+}
+
+.ui-library-hero-script {
+  position: absolute;
+  top: 9%;
+  right: 42%;
+  z-index: 3;
+  width: min(34%, 210px);
+  transform: rotate(-5deg);
+}
+
+.ui-library-hero-swatch {
+  position: absolute;
+  z-index: 1;
+  width: min(26%, 150px);
+  aspect-ratio: 1;
+  box-shadow: var(--shadow);
+}
+
+.ui-library-hero-swatch-dark {
+  left: 7%;
+  bottom: 15%;
+  background: var(--ink);
+}
+
+.ui-library-hero-swatch-orange {
+  left: 25%;
+  bottom: 3%;
+  background: var(--orange);
+}
+
+.ui-library-shell {
+  display: grid;
+  grid-template-columns: minmax(176px, 230px) minmax(0, 1480px);
+  justify-content: center;
+  gap: clamp(44px, 6vw, 92px);
+  padding-top: clamp(42px, 5vw, 76px);
+  padding-bottom: clamp(84px, 9vw, 140px);
+}
+
+.ui-library-toc {
+  position: sticky;
+  top: calc(var(--header-height) + 22px);
+  align-self: start;
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+  backdrop-filter: blur(10px);
+}
+
+.ui-library-toc a {
+  display: flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 10px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.ui-library-toc a:hover,
+.ui-library-toc a:focus-visible {
+  color: var(--orange);
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+.ui-library-content {
+  min-width: 0;
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
+.ui-library-section {
+  scroll-margin-top: calc(var(--header-height) + 28px);
+  padding: clamp(64px, 8vw, 120px) 0;
+  border-top: 1px solid var(--line);
+}
+
+.ui-library-section:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.ui-library-section-dark {
+  margin-inline: 0;
+  padding-inline: 0;
+  color: var(--ink);
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+  border-top: 1px solid var(--line);
+}
+
+.ui-library-section-heading {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 14px;
+  max-width: 940px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: clamp(34px, 5vw, 72px);
+  text-align: center;
+}
+
+.ui-library-section-heading .eyebrow {
+  margin: 0;
+  color: var(--orange);
+  font-size: clamp(15px, 1.35vw, 20px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ui-library-section-heading h2 {
+  margin: 0;
+  font-size: clamp(32px, 3.7vw, 54px);
+  line-height: 1;
+}
+
+.ui-library-section-heading > p:last-child {
+  grid-column: auto;
+  max-width: 680px;
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.45;
+}
+
+.ui-library-section-dark .ui-library-section-heading > p:last-child {
+  color: var(--muted);
+}
+
+.ui-color-grid,
+.ui-component-grid,
+.ui-image-grid,
+.ui-gesture-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 26px);
+}
+
+.ui-color-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+.ui-color-card,
+.ui-component-panel,
+.ui-image-grid figure,
+.ui-gesture-grid figure,
+.ui-type-brand,
+.ui-type-scale,
+.ui-type-script {
+  margin: 0;
+  padding: clamp(20px, 2.5vw, 34px);
+  border: 1px solid var(--line);
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+}
+
+.ui-color-card h3,
+.ui-component-panel h3,
+.ui-button-grid h3 {
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.ui-color-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.ui-color-card p + p {
+  margin-top: 12px;
+}
+
+.ui-color-card strong,
+.ui-color-card code {
+  color: var(--ink);
+}
+
+.ui-color-sample {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.1;
+  margin-bottom: 18px;
+  border: 1px solid rgba(7, 7, 7, 0.12);
+}
+
+.ui-color-paper .ui-color-sample {
+  background: var(--paper);
+}
+
+.ui-color-ink .ui-color-sample {
+  background: var(--ink);
+}
+
+.ui-color-orange .ui-color-sample {
+  background: var(--orange);
+}
+
+.ui-color-cream .ui-color-sample {
+  background: var(--cream);
+}
+
+.ui-color-muted .ui-color-sample {
+  background: var(--muted);
+}
+
+.ui-type-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(16px, 2vw, 26px);
+}
+
+.ui-type-brand,
+.ui-type-scale,
+.ui-type-script,
+.ui-type-scale > div {
+  min-width: 0;
+}
+
+.ui-type-brand {
+  display: grid;
+  align-content: center;
+  min-height: 300px;
+  color: var(--ink);
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+}
+
+.ui-type-brand p,
+.ui-type-script span,
+.ui-type-scale span {
+  margin: 0 0 14px;
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.ui-type-brand strong {
+  font-family: "Syne", "Raleway", Arial, sans-serif;
+  font-size: clamp(58px, 8vw, 116px);
+  line-height: 0.8;
+}
+
+.ui-type-scale {
+  display: grid;
+  gap: 20px;
+}
+
+.ui-type-scale > div {
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.ui-type-scale > div:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.ui-type-scale h3,
+.ui-type-scale h4,
+.ui-type-scale p {
+  margin: 0;
+}
+
+.ui-type-scale h3 {
+  max-width: 720px;
+  font-size: clamp(54px, 5.2vw, 68px);
+  line-height: 0.9;
+}
+
+.ui-type-scale h4 {
+  color: var(--orange);
+  font-size: clamp(58px, 6.2vw, 72px);
+  line-height: 0.95;
+}
+
+.ui-type-h3 {
+  font-size: clamp(26px, 2.5vw, 32px);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.ui-type-lead {
+  max-width: 620px;
+  color: var(--ink);
+  font-size: clamp(18px, 1.7vw, 24px);
+  line-height: 1.25;
+}
+
+.ui-type-spec {
+  display: block;
+  margin: -6px 0 12px;
+  color: var(--muted);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.ui-type-label {
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.ui-type-script {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  align-items: center;
+  gap: 30px;
+}
+
+.ui-type-script-samples {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(18px, 4vw, 68px);
+}
+
+.ui-type-script-samples img {
+  width: 100%;
+  max-height: 118px;
+  object-fit: contain;
+  transform: rotate(-3deg);
+}
+
+.ui-type-script-samples img:nth-child(1) {
+  max-height: 104px;
+}
+
+.ui-type-script-samples img:nth-child(2) {
+  scale: 1.22;
+  transform: rotate(2deg);
+}
+
+.ui-type-script-samples img:nth-child(3) {
+  scale: 1.2;
+  transform: rotate(-1deg);
+}
+
+.ui-button-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.ui-button-grid article {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-height: 190px;
+  padding: clamp(20px, 2.2vw, 30px);
+  border: 1px solid var(--line);
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+}
+
+.ui-library-page .ui-button-grid .button {
+  width: 210px;
+  max-width: 100%;
+  border-radius: 999px;
+}
+
+.ui-button-dark-preview {
+  display: block;
+  min-height: auto;
+  padding: 0;
+  background: transparent;
+}
+
+.ui-button-grid code {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.ui-button-grid article.ui-button-on-dark {
+  border-color: rgba(242, 236, 227, 0.18);
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.ui-button-grid article.ui-button-on-dark h3 {
+  color: var(--paper);
+}
+
+.ui-button-grid article.ui-button-on-dark code {
+  margin-top: 0;
+  color: rgba(242, 236, 227, 0.72);
+}
+
+.ui-button-text-link a {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.ui-button-text-link a span {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 180ms ease;
+}
+
+.ui-button-text-link a:hover span,
+.ui-button-text-link a:focus-visible span {
+  transform: translateX(5px);
+}
+
+.ui-component-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ui-component-panel {
+  overflow: hidden;
+}
+
+.ui-component-panel .course-card a {
+  max-width: 290px;
+  margin: 0 auto;
+}
+
+.ui-component-panel .course-hover-cta {
+  opacity: 1;
+  font-size: 10px;
+  transform: none;
+}
+
+.ui-component-facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.ui-component-facts .course-fact {
+  min-height: 76px;
+  padding: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: none;
+}
+
+.ui-component-facts .course-fact img {
+  width: 38px;
+  height: 38px;
+  margin-right: 8px;
+}
+
+.ui-component-facts .course-fact p {
+  margin: 0;
+}
+
+.ui-component-facts .course-fact span {
+  display: block;
+  color: var(--paper);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.ui-component-facts .course-fact strong {
+  display: block;
+  color: var(--paper);
+  font-size: 15px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.ui-component-panel .testimonial-card {
+  flex: none;
+  width: 100%;
+  min-height: 310px;
+}
+
+.ui-component-professor .professor-card {
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.ui-component-faq .faq-item {
+  border-bottom-color: var(--orange);
+}
+
+.ui-component-faq .faq-question {
+  grid-template-columns: 48px minmax(0, 1fr) 30px;
+  padding-inline: 0;
+}
+
+.ui-component-faq .faq-question-text {
+  font-size: clamp(19px, 1.8vw, 24px);
+}
+
+.ui-component-faq .faq-answer p {
+  margin-right: 0;
+}
+
+.ui-popup-preview {
+  position: relative;
+  max-width: 360px;
+  min-height: 380px;
+  margin: 0 auto;
+  padding: 32px 22px 24px;
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+  box-shadow: var(--shadow);
+}
+
+.ui-popup-preview.ui-popup-preview-desktop {
+  width: min(100%, 430px);
+  max-width: none;
+  min-height: 0;
+  padding: 0;
+  aspect-ratio: 1448 / 1168;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.ui-popup-preview-desktop img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ui-popup-preview .home-popup-close {
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+}
+
+.ui-popup-preview .home-popup-kicker {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 28px;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.ui-popup-preview .home-popup-kicker strong {
+  font-family: "Syne", "Raleway", Arial, sans-serif;
+  font-size: 24px;
+}
+
+.ui-popup-preview .home-popup-kicker span {
+  color: var(--orange);
+  text-transform: uppercase;
+}
+
+.ui-popup-preview h4 {
+  max-width: 280px;
+  margin: 0 0 16px;
+  font-size: 34px;
+  line-height: 0.94;
+}
+
+.ui-popup-preview > p {
+  margin: 0 0 16px;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.ui-popup-preview .home-popup-form {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  height: 42px;
+  margin: 0 0 22px;
+}
+
+.ui-popup-preview .home-popup-later {
+  position: relative;
+  top: auto;
+  left: auto;
+  padding: 0;
+  color: var(--ink);
+}
+
+.ui-image-grid {
+  grid-template-columns: 1.1fr 0.9fr 0.9fr;
+}
+
+.ui-image-grid figure {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.ui-image-grid img {
+  width: 100%;
+}
+
+.ui-image-grid figcaption,
+.ui-gesture-grid figcaption,
+.ui-icon-grid figcaption {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.ui-image-feature {
+  min-height: 360px;
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+}
+
+.ui-image-feature img {
+  height: 390px;
+  align-self: end;
+  object-fit: contain;
+}
+
+.ui-image-video-card {
+  min-height: 360px;
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+}
+
+.ui-image-video-card video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.15;
+  object-fit: cover;
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+}
+
+.ui-library-compare {
+  --split: 50%;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 0.9;
+}
+
+.ui-image-polaroids {
+  position: relative;
+  min-height: 360px;
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+}
+
+.ui-image-polaroids img {
+  position: absolute;
+  width: 48%;
+  filter: drop-shadow(8px 10px 12px rgba(0, 0, 0, 0.28));
+}
+
+.ui-image-polaroids img:first-child {
+  top: 22px;
+  left: 26px;
+  transform: rotate(-5deg);
+}
+
+.ui-image-polaroids img:nth-child(2) {
+  top: 32px;
+  right: 24px;
+  transform: rotate(6deg);
+}
+
+.ui-image-polaroids figcaption {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  left: 24px;
+  color: var(--muted);
+}
+
+.ui-image-cutout {
+  min-height: 360px;
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+}
+
+.ui-cutout-composition {
+  position: relative;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+.ui-cutout-composition .ui-cutout-shape {
+  position: absolute;
+  top: 34px;
+  right: 2%;
+  width: 66%;
+}
+
+.ui-cutout-composition .ui-cutout-main {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center;
+}
+
+.ui-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px);
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+.ui-icon-grid figure {
+  display: grid;
+  place-items: center;
+  min-height: 190px;
+  margin: 0;
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+}
+
+.ui-icon-grid img {
+  width: min(70%, 110px);
+  margin-bottom: 18px;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.18));
+}
+
+.ui-icon-grid figcaption {
+  color: var(--muted);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ui-gesture-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.ui-gesture-grid figure {
+  display: grid;
+  align-content: center;
+  min-height: 230px;
+  gap: 18px;
+}
+
+.ui-gesture-grid img {
+  width: 100%;
+  max-height: 130px;
+  object-fit: contain;
+}
+
+.ui-gesture-grid figure:nth-child(2) img,
+.ui-gesture-grid figure:nth-child(3) img,
+.ui-gesture-grid figure:nth-child(4) img {
+  max-height: none;
+  aspect-ratio: 1.4;
+  object-fit: cover;
+}
+
+@media (max-width: 1500px) {
+  .ui-type-layout {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .ui-type-brand strong {
+    font-size: clamp(58px, 5.5vw, 80px);
+  }
+
+  .ui-button-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1180px) {
+  .ui-library-hero,
+  .ui-library-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .ui-library-hero-board {
+    min-height: 420px;
+  }
+
+  .ui-library-toc {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 8;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px 0;
+    border-width: 1px 0;
+    background: var(--paper) url("assets/images/FONDO CLARO.png") center / cover;
+    scrollbar-width: none;
+  }
+
+  .ui-library-toc::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ui-library-toc a {
+    flex: 0 0 auto;
+    background: rgba(242, 236, 227, 0.42);
+  }
+
+  .ui-color-grid,
+  .ui-button-grid,
+  .ui-icon-grid,
+  .ui-gesture-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ui-component-grid,
+  .ui-image-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .ui-library-hero {
+    min-height: 470px;
+    width: 100%;
+    padding-top: 84px;
+    padding-bottom: 70px;
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .ui-library-hero-image {
+    object-position: 28% center;
+  }
+
+  .ui-library-hero h1 {
+    max-width: calc(100vw - 36px);
+    font-size: clamp(42px, 13vw, 58px);
+  }
+
+  .ui-library-hero-copy {
+    width: 100%;
+    max-width: calc(100vw - 36px);
+  }
+
+  .ui-library-hero-copy > p:last-child {
+    max-width: calc(100vw - 36px);
+    font-size: 16px;
+    overflow-wrap: break-word;
+  }
+
+  .ui-library-page .site-header {
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .ui-library-page .menu-toggle {
+    display: grid;
+  }
+
+  .ui-library-hero-board {
+    justify-self: stretch;
+    width: 100%;
+    min-height: 360px;
+    overflow: hidden;
+  }
+
+  .ui-library-hero-board::before {
+    top: 8%;
+    width: 82%;
+  }
+
+  .ui-library-hero-chair {
+    right: 12%;
+    width: min(64%, 260px);
+  }
+
+  .ui-library-hero-script {
+    top: 6%;
+    right: 45%;
+    width: min(38%, 150px);
+  }
+
+  .ui-library-shell {
+    gap: 34px;
+    width: 100%;
+    padding-right: 18px;
+    padding-left: 18px;
+    padding-top: 0;
+  }
+
+  .ui-library-section {
+    padding: 58px 0;
+  }
+
+  .ui-library-section-dark {
+    margin-inline: 0;
+  }
+
+  .ui-library-section-heading {
+    display: block;
+    margin-bottom: 30px;
+  }
+
+  .ui-library-section-heading .eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .ui-library-section-heading h2 {
+    margin-bottom: 14px;
+    font-size: clamp(31px, 8.5vw, 42px);
+  }
+
+  .ui-library-section-heading > p:last-child {
+    max-width: none;
+  }
+
+  .ui-color-grid,
+  .ui-component-grid,
+  .ui-image-grid,
+  .ui-icon-grid,
+  .ui-gesture-grid,
+  .ui-type-layout,
+  .ui-button-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ui-type-brand {
+    min-height: 220px;
+  }
+
+  .ui-type-scale h3 {
+    font-size: clamp(42px, 11vw, 50px);
+  }
+
+  .ui-type-scale h4 {
+    font-size: clamp(40px, 10.8vw, 50px);
+  }
+
+  .ui-type-spec {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .ui-type-script {
+    grid-template-columns: 1fr;
+  }
+
+  .ui-type-script-samples {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    justify-items: start;
+  }
+
+  .ui-type-script-samples img {
+    width: min(100%, 310px);
+  }
+
+  .ui-button-grid article {
+    min-height: 150px;
+  }
+
+  .ui-component-panel .testimonial-card {
+    min-height: 280px;
+  }
+
+  .ui-component-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .ui-image-feature {
+    grid-row: auto;
+  }
+
+  .ui-image-polaroids {
+    min-height: 330px;
+  }
+
+  .ui-icon-grid figure {
+    min-height: 160px;
+  }
+
+  .ui-icon-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
